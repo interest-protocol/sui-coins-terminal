@@ -21,8 +21,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(typescript@5.6.2)
       '@interest-protocol/sui-tokens':
-        specifier: ^1.12.1
-        version: 1.12.3
+        specifier: ^2.0.4
+        version: 2.0.4
       '@interest-protocol/tokens':
         specifier: ^1.3.0
         version: 1.3.0
@@ -35,9 +35,6 @@ importers:
       '@mysten/sui':
         specifier: ^1.7.0
         version: 1.11.0(typescript@5.6.2)
-      '@mysten/sui.js':
-        specifier: ^0.54.1
-        version: 0.54.1(typescript@5.6.2)
       '@mysten/suins':
         specifier: ^0.3.0
         version: 0.3.1(typescript@5.6.2)
@@ -1243,8 +1240,8 @@ packages:
   '@interest-protocol/dca-sdk@3.1.1':
     resolution: {integrity: sha512-mrwbrAAai+GB+0kCWM6buXeaKEdUL+rEeyslt5msWqWosLjmHpzFqX+YgeetqCvSionX1GJ6wrVnVNO7dU2cEA==}
 
-  '@interest-protocol/sui-tokens@1.12.3':
-    resolution: {integrity: sha512-7GDPXOrpbpJgX7pxrnCXf456NRWgRfBnCIgTApsGlQGX2xtBdeogZJrZnnMQAGSYMIRtPTXTcqzTJ+B94PcL0g==}
+  '@interest-protocol/sui-tokens@2.0.4':
+    resolution: {integrity: sha512-OyqnvP/mmlov4/YIQ3pkyprjbjRsx0lPRYGDIEgoTP0ZtR4yjnwIjcRDCxj9XKGwhckoM0odE6yJiB17ELa4og==}
 
   '@interest-protocol/tokens@1.3.0':
     resolution: {integrity: sha512-zDh0eiZEe0ybhon9mgwvBt0p6FQ4sVFlg0W4Tj4joAA0HBr5FulbUxpkSbBvx6UN8RRTLrjbJFcuMBKTTloV7g==}
@@ -10320,7 +10317,7 @@ snapshots:
       - '@gql.tada/vue-support'
       - typescript
 
-  '@interest-protocol/sui-tokens@1.12.3': {}
+  '@interest-protocol/sui-tokens@2.0.4': {}
 
   '@interest-protocol/tokens@1.3.0':
     dependencies:

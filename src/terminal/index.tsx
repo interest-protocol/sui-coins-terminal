@@ -55,13 +55,14 @@ export const SwapInterface: FC<SwapInterfaceProps> = ({
         p="xs"
         gap="xs"
         mx="auto"
-        width="25rem"
         display="flex"
+        maxWidth="25rem"
         overflowY="auto"
         bg="lowContainer"
         borderRadius="xs"
         position="relative"
         flexDirection="column"
+        width="calc(95vw - 2rem)"
         maxHeight="calc(100vh - 5rem)"
       >
         <Web3Manager />
