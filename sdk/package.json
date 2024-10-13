@@ -1,5 +1,5 @@
 {
-  "private": true,
+  "private": false,
   "version": "0.0.1-alpha",
   "name": "@interest-protocol/sui-coins-terminal",
   "description": "The community coin of Sui",
