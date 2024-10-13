@@ -9,7 +9,7 @@ import { FC } from "react";
 import { useForm } from "react-hook-form";
 
 import { SearchSVG, TimesSVG } from "../../../components/svg";
-import { CoinObject } from "../../../web3-manager/coins-manager/coins-manager.types";
+import { CoinObject } from "../../../components/web3-manager/coins-manager/coins-manager.types";
 import FavoriteTokens from "./favorite-tokens";
 import {
   SearchTokenForm,

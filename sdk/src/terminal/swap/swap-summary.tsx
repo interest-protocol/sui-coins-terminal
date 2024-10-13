@@ -12,6 +12,7 @@ import { FixedPointMath } from "../../lib";
 import { ZERO_BIG_NUMBER } from "../../utils";
 import { useSwap } from "./swap.hooks";
 import { SwapForm } from "./swap.types";
+import { isAftermathRoute } from "./swap.utils";
 
 const SwapSummary: FC = () => {
   const swap = useSwap();
@@ -26,7 +27,11 @@ const SwapSummary: FC = () => {
   const fromUSDPrice = useWatch({ control, name: "from.usdPrice" });
   const slippage = useWatch({ control, name: "settings.slippage" });
 
-  const trackKey = route ? route.amount_out_with_fee.toString() : 0;
+  const trackKey = route
+    ? isAftermathRoute(route)
+      ? route.coinOut.amount.toString()
+      : route.amount_out_with_fee.toString()
+    : 0;
 
   const { data: fees, isLoading } = useSWR(
     `network-fee-${trackKey}-${currentAccount?.address}-${slippage}`,

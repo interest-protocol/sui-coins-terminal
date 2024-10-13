@@ -3,7 +3,7 @@ import { Network } from "@mysten/suins";
 import BigNumber from "bignumber.js";
 import { Control, UseFormSetValue } from "react-hook-form";
 
-import { CoinObject } from "../../../web3-manager/coins-manager/coins-manager.types";
+import { CoinObject } from "../../../components/web3-manager/coins-manager/coins-manager.types";
 
 export interface TokenModalMetadata {
   name: string;
