@@ -1,6 +1,6 @@
 {
   "private": false,
-  "version": "0.0.6-alpha",
+  "version": "0.0.7-alpha",
   "name": "@interest-protocol/sui-coins-terminal",
   "description": "The community coin of Sui",
   "license": "MIT",
@@ -26,7 +26,7 @@
     "@emotion/react": "^11.11.1",
     "@interest-protocol/sui-tokens": "^2.0.4",
     "@interest-protocol/tokens": "^1.3.0",
-    "@interest-protocol/ui-kit": "^0.2.26-alpha",
+    "@interest-protocol/ui-kit": "0.3.1-beta",
     "@mysten/dapp-kit": "^0.14.17",
     "@mysten/sui": "^1.7.0",
     "@mysten/suins": "^0.3.0",

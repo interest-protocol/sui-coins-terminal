@@ -67,41 +67,46 @@ export const GlobalStyles = css`
     font-style: normal;
   }
 
-  #swap-terminal * {
+  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Satoshi";
   }
 
-  #swap-terminal {
+  html {
     scroll-behavior: smooth;
   }
 
-  #swap-terminal a {
+  body,
+  html {
+    overflow-x: hidden;
+  }
+
+  a {
     color: inherit;
     text-decoration: none;
   }
   /* width */
-  #swap-terminal ::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     width: 10px;
     padding: 2rem;
   }
 
   /* Track */
-  #swap-terminal ::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     border-radius: 0.5rem;
     background: transparent;
     transition: all 300ms ease-in-out;
   }
 
   /* Track on hover */
-  #swap-terminal ::-webkit-scrollbar-track:hover {
+  ::-webkit-scrollbar-track:hover {
     background: #fff1;
   }
 
   /* Handle */
-  #swap-terminal ::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 0.5rem;
     border: 5px solid transparent;
