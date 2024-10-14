@@ -4,7 +4,8 @@
     "module": "ESNext",
     "jsx": "react-jsx",
     "declaration": true,              // Generate type declaration files
-    "declarationDir": "./dist/types", // Output for declaration files
+    "emitDeclarationOnly": true,      // Generate types only, not JS
+    "declarationDir": "./dist", // Output for declaration files
     "outDir": "./dist",               // Output folder for compiled files
     "moduleResolution": "node",
     "esModuleInterop": true,
