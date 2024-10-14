@@ -11,10 +11,10 @@ import {
   BTCChainSVG,
   DefaultSVG,
   ETHChainSVG,
+  FTMChainSVG,
   MATICChainSVG,
   SOLChainSVG,
 } from "../components/svg";
-import FTMChain from "../components/svg/ftm-chain";
 import { SVGProps } from "../components/svg/svg.types";
 import { Network } from "../constants";
 import {
@@ -33,7 +33,7 @@ const CHAIN_ICON: Record<Chain, FC<SVGProps>> = {
   AVAX: AVAXChainSVG,
   ARB: ARBChainSVG,
   BTC: BTCChainSVG,
-  FTM: FTMChain,
+  FTM: FTMChainSVG,
   MATIC: MATICChainSVG,
 };
 
@@ -60,16 +60,13 @@ const TokenIcon: FC<TokenIconProps> = ({
   const { data: iconSrc, isLoading } = useSWR(
     `${network}-${type}-${url}`,
     async () => {
-      if (TokenIcon || url)
+      if (TokenIcon || STRICT_TOKENS_MAP[network][type]?.logoUrl)
         return STRICT_TOKENS_MAP[network][type].logoUrl ?? null;
 
-      if (STRICT_TOKENS_MAP[network][type].logoUrl)
-        return STRICT_TOKENS_MAP[network][type].logoUrl;
-
-      if (STRICT_TOKENS_MAP[network][type].logoUrl)
-        return STRICT_TOKENS_MAP[network][type].logoUrl;
+      if (url) return url;
 
       const data = await fetchCoinMetadata({ network, type });
+
       return data.iconUrl;
     },
   );
@@ -121,7 +118,7 @@ const TokenIcon: FC<TokenIconProps> = ({
         >
           {loading && (
             <Box position="absolute" top="-0.5rem" left="0.9rem">
-              <ProgressIndicator size={16} variant="loading" />
+              <ProgressIndicator size={loaderSize} variant="loading" />
             </Box>
           )}
           <img
@@ -148,8 +145,8 @@ const TokenIcon: FC<TokenIconProps> = ({
           <Box
             right="-0.5rem"
             bottom="-0.3rem"
-            position="absolute"
             overflow="hidden"
+            position="absolute"
             borderRadius="full"
           >
             <ChainIcon maxHeight={size} maxWidth={size} width="100%" />
@@ -196,9 +193,9 @@ const TokenIcon: FC<TokenIconProps> = ({
         )}
         {!simple && ChainIcon && (
           <Box
-            position="absolute"
-            bottom="-0.3rem"
             right="-0.5rem"
+            bottom="-0.3rem"
+            position="absolute"
             borderRadius="full"
           >
             <ChainIcon maxHeight={size} maxWidth={size} width="100%" />
@@ -210,7 +207,6 @@ const TokenIcon: FC<TokenIconProps> = ({
   if (url)
     return (
       <Box
-        bg="black"
         color="white"
         display="flex"
         position="relative"
@@ -285,7 +281,7 @@ const TokenIcon: FC<TokenIconProps> = ({
         >
           {(isLoading || loading) && (
             <Box position="absolute" top="-0.5rem" left="0.9rem">
-              <ProgressIndicator size={16} variant="loading" />
+              <ProgressIndicator size={loaderSize} variant="loading" />
             </Box>
           )}
           {iconSrc && (
