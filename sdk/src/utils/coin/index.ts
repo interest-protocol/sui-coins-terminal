@@ -1,5 +1,5 @@
 import { Token } from "@interest-protocol/sui-tokens";
-import { CoinStruct, SuiClient } from "@mysten/sui/client";
+import { CoinStruct } from "@mysten/sui/client";
 import { TransactionResult } from "@mysten/sui/transactions";
 import { formatAddress, SUI_TYPE_ARG } from "@mysten/sui/utils";
 
@@ -9,10 +9,10 @@ import {
 } from "../../components/web3-manager/coins-manager/coins-manager.types";
 import { Network } from "../../constants";
 import {
-  CELER_TOKENS,
-  CELER_TOKENS_TYPE,
   STRICT_TOKENS,
   STRICT_TOKENS_TYPE,
+  SUI_BRIDGE_TOKENS,
+  SUI_BRIDGE_TOKENS_TYPE,
   WORMHOLE_TOKENS,
   WORMHOLE_TOKENS_TYPE,
 } from "../../constants/coins";
@@ -68,13 +68,12 @@ export const getCoin = async (
   type: `0x${string}`,
   network: Network,
   coinsMap: CoinsMap,
-  client: SuiClient,
 ): Promise<Token> =>
   new Promise((resolve) => {
     if (
       STRICT_TOKENS_TYPE[network].includes(type) ??
       WORMHOLE_TOKENS_TYPE[network].includes(type) ??
-      CELER_TOKENS_TYPE[network].includes(type)
+      SUI_BRIDGE_TOKENS_TYPE[network].includes(type)
     )
       return resolve(
         STRICT_TOKENS[network].find(
@@ -83,14 +82,14 @@ export const getCoin = async (
           WORMHOLE_TOKENS[network].find(
             ({ type: strictType }) => type === strictType,
           ) ??
-          CELER_TOKENS[network].find(
+          SUI_BRIDGE_TOKENS[network].find(
             ({ type: strictType }) => type === strictType,
           )!,
       );
 
     if (coinsMap[type]) return resolve(coinObjectToToken(coinsMap[type]));
 
-    fetchCoinMetadata({ network, type, client })
+    fetchCoinMetadata({ network, type })
       .then((metadata) =>
         resolve(coinMetadataToToken(metadata as CoinMetadataWithType)),
       )
@@ -158,3 +157,19 @@ export async function getCoinOfValue({
 
   return tx.splitCoins(firstCoinInput, [tx.pure.u64(coinValue)]);
 }
+
+export const getPrices = (coins: ReadonlyArray<string>) =>
+  fetch("https://rates-api-production.up.railway.app/api/fetch-quote", {
+    method: "POST",
+    body: JSON.stringify({ coins }),
+    headers: { "Content-Type": "application/json", accept: "*/*" },
+  })
+    .then((res) => res.json?.())
+    .then(
+      (data: ReadonlyArray<{ coin: string; price: number }>) =>
+        data.reduce(
+          (acc, { coin, price }) => ({ ...acc, [coin]: price }),
+          {},
+        ) as Record<string, number>,
+    )
+    .catch(() => ({}) as Record<string, number>);

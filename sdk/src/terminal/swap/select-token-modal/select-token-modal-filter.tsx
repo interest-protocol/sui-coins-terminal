@@ -4,8 +4,12 @@ import { FC } from "react";
 import { useWatch } from "react-hook-form";
 import { v4 } from "uuid";
 
+import { FavoriteSVG } from "../../../components/svg";
 import { Network } from "../../../constants";
-import { SelectTokenFilterProps } from "./select-token-modal.types";
+import {
+  SelectTokenFilterProps,
+  TokenOrigin,
+} from "./select-token-modal.types";
 
 const SelectTokenFilter: FC<SelectTokenFilterProps> = ({
   control,
@@ -17,15 +21,27 @@ const SelectTokenFilter: FC<SelectTokenFilterProps> = ({
   return (
     <Box
       mt="s"
-      gap="s"
+      gap="2xs"
       display="grid"
       flexWrap="wrap"
       gridTemplateColumns={
-        network === Network.MAINNET ? "1fr 1fr 1fr 1fr" : "1fr 1fr"
+        network === Network.MAINNET ? "1.5rem 1fr 1fr 1fr 1fr" : "1fr 1fr"
       }
     >
+      <Box
+        key={v4()}
+        cursor="pointer"
+        onClick={() => setValue("filter", TokenOrigin.Fav)}
+      >
+        <Typography variant="body" size="medium" textAlign="center" py="m">
+          <FavoriteSVG maxWidth="1rem" maxHeight="1rem" width="100%" />
+        </Typography>
+        {filterSelected === TokenOrigin.Fav && (
+          <Motion layout borderBottom="2px solid" borderColor="primary" />
+        )}
+      </Box>
       {(network === Network.MAINNET
-        ? ["Strict", "Wallet", "Wormhole", "Celer"]
+        ? ["Strict", "Wallet", "Wormhole", "Sui Bridge"]
         : ["Strict", "Wallet"]
       ).map((item, index) => (
         <Box

@@ -28,11 +28,18 @@ export interface SelectTokenFilterProps {
   setValue: UseFormSetValue<SearchTokenForm>;
 }
 
+export interface FavoritesModalBodyProps {
+  search: string;
+  types: ReadonlyArray<string>;
+  handleSelectToken: (type: string, chain?: Chain) => void;
+}
+
 export enum TokenOrigin {
   Strict,
   Wallet,
   Wormhole,
-  Celer,
+  SuiBridge,
+  Fav,
 }
 
 export interface SearchTokenForm {

@@ -1,6 +1,5 @@
 import { Chain } from "@interest-protocol/sui-tokens";
 import { Box, ProgressIndicator } from "@interest-protocol/ui-kit";
-import { useSuiClient } from "@mysten/dapp-kit";
 import { FC, useState } from "react";
 import useSWR from "swr";
 
@@ -19,8 +18,8 @@ import FTMChain from "../components/svg/ftm-chain";
 import { SVGProps } from "../components/svg/svg.types";
 import { Network } from "../constants";
 import {
-  CELER_TOKENS,
   STRICT_TOKENS_MAP,
+  SUI_BRIDGE_TOKENS,
   TOKEN_ICONS,
   WORMHOLE_TOKENS,
 } from "../constants/coins";
@@ -49,7 +48,6 @@ const TokenIcon: FC<TokenIconProps> = ({
   size = "1.5rem",
   loaderSize = 16,
 }) => {
-  const client = useSuiClient();
   const isMainnet = network === Network.MAINNET;
   const TokenIcon = TOKEN_ICONS[network]?.[isMainnet ? type : symbol] ?? null;
 
@@ -71,7 +69,7 @@ const TokenIcon: FC<TokenIconProps> = ({
       if (STRICT_TOKENS_MAP[network][type].logoUrl)
         return STRICT_TOKENS_MAP[network][type].logoUrl;
 
-      const data = await fetchCoinMetadata({ network, type, client });
+      const data = await fetchCoinMetadata({ network, type });
       return data.iconUrl;
     },
   );
@@ -79,7 +77,7 @@ const TokenIcon: FC<TokenIconProps> = ({
   const chain =
     STRICT_TOKENS_MAP[network][type]?.chain ??
     WORMHOLE_TOKENS[network].find((token) => token.type === type)?.chain ??
-    CELER_TOKENS[network].find((token) => token.type === type)?.chain;
+    SUI_BRIDGE_TOKENS[network].find((token) => token.type === type)?.chain;
 
   const ChainIcon = chain ? CHAIN_ICON[chain] : null;
 

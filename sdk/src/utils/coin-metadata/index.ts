@@ -1,33 +1,106 @@
-import { normalizeStructTag } from "@mysten/sui/utils";
-
 import { Network } from "../../constants";
 import { CoinMetadataWithType } from "../../interface";
-import coinMetadataJsonRaw from "./coin-metadata.data";
-import { FetchCoinMetadata } from "./coin-metadata.types";
+import { isSameStructTag } from "../address";
+import {
+  FetchCoinMetadata,
+  FetchCoinMetadataMultipleTypeArg,
+  FetchCoinMetadataSingleTypeArg,
+} from "./coin-metadata.types";
 
-const coinMetadataMap = coinMetadataJsonRaw as unknown as Record<
-  Network,
-  Record<string, CoinMetadataWithType>
->;
+const isSingleType = (
+  args: FetchCoinMetadataSingleTypeArg | FetchCoinMetadataMultipleTypeArg,
+): args is FetchCoinMetadataSingleTypeArg =>
+  !!(args as FetchCoinMetadataSingleTypeArg).type;
 
 const metadatas: Record<string, CoinMetadataWithType> = {};
 
-export const fetchCoinMetadata: FetchCoinMetadata = async ({
-  type,
-  client,
-  network,
-}) => {
-  const localMetadata =
-    coinMetadataMap[network][normalizeStructTag(type as string)];
+export const fetchCoinMetadata: FetchCoinMetadata = async (args) => {
+  if (isSingleType(args)) {
+    if (metadatas[args.type]) return metadatas[args.type];
 
-  if (localMetadata) return localMetadata;
+    if (args.network === Network.MAINNET)
+      return await fetch(
+        "https://sui-coin-purse-production.up.railway.app/api/fetch-coin",
+        {
+          method: "POST",
+          headers: {
+            accept: "*/*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ coinType: args.type }),
+        },
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          metadatas[args.type] = data;
+          return data;
+        });
 
-  if (metadatas[type]) return metadatas[type];
+    return await fetch("/api/auth/v1/coin-metadata", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(args),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        metadatas[args.type] = data;
+        return data;
+      });
+  }
 
-  return await client.getCoinMetadata({ coinType: type }).then((data) => {
-    if (!data) throw new Error(`Failed to fetch metadata: ${type}`);
+  const uniqueTypes = Array.from(new Set(args.types));
 
-    metadatas[type] = { ...data, type: type as `0x${string}` };
-    return { ...data, type: type as `0x${string}` } as CoinMetadataWithType;
-  });
+  const cachedMetadatas = uniqueTypes.reduce((acc, type) => {
+    const metadata = metadatas[type];
+    if (!metadata) return acc;
+    return [...acc, metadata];
+  }, [] as ReadonlyArray<CoinMetadataWithType>);
+
+  const missingTypes = uniqueTypes.filter(
+    (type) => !cachedMetadatas.some((meta) => isSameStructTag(meta.type, type)),
+  );
+
+  if (!missingTypes.length) return cachedMetadatas;
+
+  let missingMetadatas = [];
+
+  if (args.network === Network.MAINNET)
+    missingMetadatas = await fetch(
+      "https://sui-coin-purse-production.up.railway.app/api/fetch-coins",
+      {
+        method: "POST",
+        headers: { accept: "*/*", "Content-Type": "application/json" },
+        body: JSON.stringify({ coinTypes: missingTypes }),
+      },
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        data.forEach(
+          (metadata: CoinMetadataWithType) =>
+            (metadatas[metadata.type] = metadata),
+        );
+
+        return data;
+      });
+  else
+    missingMetadatas = await fetch("/api/auth/v1/coin-metadata", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ coinsType: missingTypes, network: args.network }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        data.forEach(
+          (metadata: CoinMetadataWithType) =>
+            (metadatas[metadata.type] = metadata),
+        );
+
+        return data;
+      });
+
+  return [...cachedMetadatas, ...missingMetadatas];
 };

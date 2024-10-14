@@ -1,19 +1,16 @@
-import { useSuiClient } from "@mysten/dapp-kit";
 import { SUI_TYPE_ARG } from "@mysten/sui/utils";
 import { FC, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
-import { getAllCoinsPrice } from "../../hooks/use-get-multiple-token-price-by-type/use-get-multiple-token-price-by-type.utils";
 import { useNetwork } from "../../hooks/use-network";
 import { useWeb3 } from "../../hooks/use-web3";
-import { getCoin, isSui } from "../../utils";
+import { getCoin, getPrices, isSui } from "../../utils";
 import { SwapForm, SwapInitManagerProps, SwapToken } from "./swap.types";
 
 const SwapInitManager: FC<SwapInitManagerProps> = ({ to, from }) => {
   const { coinsMap } = useWeb3();
   const form = useFormContext<SwapForm>();
   const network = useNetwork();
-  const client = useSuiClient();
 
   const getSwapToken = async (
     type: `0x${string}`,
@@ -32,7 +29,7 @@ const SwapInitManager: FC<SwapInitManagerProps> = ({ to, from }) => {
       };
     }
     if (typeof type === "string" && type.startsWith("0x")) {
-      const coin = await getCoin(type, network, coinsMap, client);
+      const coin = await getCoin(type, network, coinsMap);
 
       return {
         ...coin,
@@ -55,7 +52,7 @@ const SwapInitManager: FC<SwapInitManagerProps> = ({ to, from }) => {
 
     form.setValue(field, token);
 
-    getAllCoinsPrice([token.type], network)
+    getPrices([token.type])
       .then((data) => form.setValue(`${field}.usdPrice`, data[token.type]))
       .catch(console.log);
 

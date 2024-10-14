@@ -1,10 +1,13 @@
 import { useCurrentAccount, useSuiClient } from "@mysten/dapp-kit";
+import { CoinBalance } from "@mysten/sui/dist/cjs/client";
 import { normalizeStructTag, SUI_TYPE_ARG } from "@mysten/sui/utils";
 import BigNumber from "bignumber.js";
-import { values } from "ramda";
-import { FC } from "react";
+import { isEmpty } from "ramda";
+import { FC, useEffect } from "react";
 import useSWR from "swr";
 
+import { Network } from "../../../constants";
+import { METADATA } from "../../../constants/metadata";
 import { useCoins } from "../../../hooks/use-coins";
 import { useNetwork } from "../../../hooks/use-network";
 import { CoinMetadataWithType } from "../../../interface";
@@ -15,62 +18,65 @@ const CoinsManager: FC = () => {
   const network = useNetwork();
   const suiClient = useSuiClient();
   const currentAccount = useCurrentAccount();
-  const { id, delay, set, updateCoins, updateLoading, updateError } =
+  const { id, delay, coinsMap, updateCoins, updateLoading, updateError } =
     useCoins();
+
+  useEffect(() => {
+    updateCoins({} as CoinsMap);
+  }, [currentAccount]);
 
   useSWR(
     makeSWRKey([id, network, currentAccount?.address], CoinsManager.name),
     async () => {
       try {
         updateError(false);
-        updateLoading(true);
+        if (!currentAccount?.address) return updateCoins({} as CoinsMap);
 
-        if (!currentAccount?.address) return;
+        if (isEmpty(coinsMap)) updateLoading(true);
 
-        updateCoins({} as CoinsMap);
-
-        const coinsRaw = await suiClient.getAllBalances({
+        const allCoinsRaw = await suiClient.getAllBalances({
           owner: currentAccount.address,
         });
 
-        if (!coinsRaw.length) return;
-
-        const coinsType = coinsRaw.reduce(
-          (acc, { coinType }) =>
-            acc.includes(coinType) ? acc : [...acc, coinType],
-          [] as ReadonlyArray<string>,
+        const coinsRaw = allCoinsRaw.reduce(
+          (acc, coin) =>
+            Number(coin.totalBalance)
+              ? isSui(coin.coinType)
+                ? [coin, ...acc]
+                : [...acc, coin]
+              : acc,
+          [] as ReadonlyArray<CoinBalance>,
         );
 
+        if (!coinsRaw.length) return updateCoins({} as CoinsMap);
+
+        const coinsType = [
+          ...new Set(coinsRaw.map(({ coinType }) => coinType)),
+        ];
+
         const dbCoinsMetadata: Record<string, CoinMetadataWithType> =
-          await Promise.all(
-            coinsType.map((type) =>
-              fetchCoinMetadata({ type, network, client: suiClient }).then(
-                (data) => data,
-              ),
-            ),
-          ).then((data: ReadonlyArray<CoinMetadataWithType>) =>
-            data.reduce(
-              (acc, item) => ({
+          await fetchCoinMetadata({ network, types: coinsType }).then((data) =>
+            data.reduce((acc, item) => {
+              const override =
+                METADATA[network as Network][normalizeStructTag(item.type)] ||
+                item;
+              return {
                 ...acc,
-                [normalizeStructTag(item.type)]: {
-                  ...item,
-                  type: normalizeStructTag(item.type),
+                [normalizeStructTag(override.type)]: {
+                  ...override,
+                  type: normalizeStructTag(override.type),
                 },
-              }),
-              {},
-            ),
+              };
+            }, {}),
           );
 
         const filteredCoinsRaw = coinsRaw.filter(
           ({ coinType }) => dbCoinsMetadata[normalizeStructTag(coinType)],
         );
 
-        if (!filteredCoinsRaw.length) {
-          updateCoins({} as CoinsMap);
-          return;
-        }
+        if (!filteredCoinsRaw.length) return updateCoins({} as CoinsMap);
 
-        const finalCoins = filteredCoinsRaw.reduce(
+        const coins = filteredCoinsRaw.reduce(
           (acc, { coinType, totalBalance, coinObjectCount }) => {
             const type = normalizeStructTag(coinType) as `0x${string}`;
             const { symbol, decimals, ...metadata } = dbCoinsMetadata[type];
@@ -79,37 +85,34 @@ const CoinsManager: FC = () => {
               return {
                 ...acc,
                 [SUI_TYPE_ARG as `0x${string}`]: {
+                  ...acc[SUI_TYPE_ARG as `0x${string}`],
+                  type: SUI_TYPE_ARG as `0x${string}`,
+                  symbol,
                   decimals,
                   metadata,
-                  symbol: "MOVE",
-                  coinObjectCount,
                   balance: BigNumber(totalBalance),
-                  type: SUI_TYPE_ARG as `0x${string}`,
+                  objectsCount: coinObjectCount,
                 },
               };
 
             return {
               ...acc,
               [type]: {
+                ...acc[type],
                 type,
                 symbol,
                 decimals,
                 metadata,
-                coinObjectCount,
+                objectsCount: coinObjectCount,
                 balance: BigNumber(totalBalance),
               },
             };
           },
           {} as CoinsMap,
-        );
+        ) as unknown as CoinsMap;
 
-        set(({ coinsMap, coins }) => ({
-          coinsMap: { ...coinsMap, ...finalCoins },
-          coins: [...coins, ...values(finalCoins)],
-        }));
-      } catch (error) {
-        console.log({ error });
-
+        updateCoins(coins);
+      } catch {
         updateError(true);
       } finally {
         updateLoading(false);

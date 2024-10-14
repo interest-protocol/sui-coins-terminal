@@ -57,6 +57,7 @@ export const useWeb3 = () => {
     coinsMap,
     ownedNfts,
     otherObjects,
+    coinsLoading,
     coinsObjects: compiledCoinsObjects,
     mutate: () => {
       refreshCoins();

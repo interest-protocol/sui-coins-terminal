@@ -4,9 +4,9 @@ import { FC, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { ChevronDownSVG } from "../../../components/svg";
-import { getAllCoinsPrice } from "../../../hooks/use-get-multiple-token-price-by-type/use-get-multiple-token-price-by-type.utils";
 import { useNetwork } from "../../../hooks/use-network";
 import TokenIcon from "../../../token-icon";
+import { getPrices } from "../../../utils";
 import SelectTokenModal from "../select-token-modal";
 import { SwapForm } from "../swap.types";
 import { InputProps } from "./input.types";
@@ -60,7 +60,7 @@ const SelectToken: FC<InputProps> = ({ label }) => {
       usdPrice: null,
     });
 
-    getAllCoinsPrice([type], network)
+    getPrices([type])
       .then((data) => setValue(`${label}.usdPrice`, data[type]))
       .catch(() => null);
 

@@ -1,4 +1,3 @@
-import { useSuiClient } from "@mysten/dapp-kit";
 import { FC, useId } from "react";
 import useSWR from "swr";
 import { v4 } from "uuid";
@@ -16,13 +15,12 @@ const ModalTokenSearch: FC<ModalTokenSearchProps> = ({
 }) => {
   const id = useId();
   const network = useNetwork();
-  const client = useSuiClient();
   const {
     error,
     isLoading,
     data: tokenMetadata,
   } = useSWR(`get-token-metadata-${network}-${search}-${id}`, () =>
-    fetchCoinMetadata({ type: search, network, client }),
+    fetchCoinMetadata({ type: search, network }),
   );
 
   if (isLoading) return <FetchingToken />;

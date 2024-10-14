@@ -1,13 +1,12 @@
 import { Chain } from "@interest-protocol/sui-tokens";
 import { Box, ProgressIndicator } from "@interest-protocol/ui-kit";
-import { useSuiClient } from "@mysten/dapp-kit";
 import { FC, useState } from "react";
 import useSWR from "swr";
 
 import { Network } from "../../constants";
 import {
-  CELER_TOKENS,
   STRICT_TOKENS_MAP,
+  SUI_BRIDGE_TOKENS,
   TOKEN_ICONS,
   WORMHOLE_TOKENS,
 } from "../../constants/coins";
@@ -20,10 +19,10 @@ import {
   BTCChainSVG,
   DefaultSVG,
   ETHChainSVG,
+  FTMChainSVG,
   MATICChainSVG,
   SOLChainSVG,
 } from "../svg";
-import FTMChain from "../svg/ftm-chain";
 import { SVGProps } from "../svg/svg.types";
 import { TokenIconProps } from "./token-icon.types";
 
@@ -34,7 +33,7 @@ const CHAIN_ICON: Record<Chain, FC<SVGProps>> = {
   AVAX: AVAXChainSVG,
   ARB: ARBChainSVG,
   BTC: BTCChainSVG,
-  FTM: FTMChain,
+  FTM: FTMChainSVG,
   MATIC: MATICChainSVG,
 };
 
@@ -49,7 +48,6 @@ const TokenIcon: FC<TokenIconProps> = ({
   size = "1.5rem",
   loaderSize = 16,
 }) => {
-  const client = useSuiClient();
   const isMainnet = network === Network.MAINNET;
   const TokenIcon = TOKEN_ICONS[network]?.[isMainnet ? type : symbol] ?? null;
 
@@ -62,16 +60,13 @@ const TokenIcon: FC<TokenIconProps> = ({
   const { data: iconSrc, isLoading } = useSWR(
     `${network}-${type}-${url}`,
     async () => {
-      if (TokenIcon || url)
+      if (TokenIcon || STRICT_TOKENS_MAP[network][type]?.logoUrl)
         return STRICT_TOKENS_MAP[network][type].logoUrl ?? null;
 
-      if (STRICT_TOKENS_MAP[network][type]?.logoUrl)
-        return STRICT_TOKENS_MAP[network][type].logoUrl;
+      if (url) return url;
 
-      if (STRICT_TOKENS_MAP[network][type].logoUrl)
-        return STRICT_TOKENS_MAP[network][type].logoUrl;
+      const data = await fetchCoinMetadata({ network, type });
 
-      const data = await fetchCoinMetadata({ network, type, client });
       return data.iconUrl;
     },
   );
@@ -79,7 +74,7 @@ const TokenIcon: FC<TokenIconProps> = ({
   const chain =
     STRICT_TOKENS_MAP[network][type]?.chain ??
     WORMHOLE_TOKENS[network].find((token) => token.type === type)?.chain ??
-    CELER_TOKENS[network].find((token) => token.type === type)?.chain;
+    SUI_BRIDGE_TOKENS[network].find((token) => token.type === type)?.chain;
 
   const ChainIcon = chain ? CHAIN_ICON[chain] : null;
 
@@ -123,7 +118,7 @@ const TokenIcon: FC<TokenIconProps> = ({
         >
           {loading && (
             <Box position="absolute" top="-0.5rem" left="0.9rem">
-              <ProgressIndicator size={16} variant="loading" />
+              <ProgressIndicator size={loaderSize} variant="loading" />
             </Box>
           )}
           <img
@@ -150,8 +145,8 @@ const TokenIcon: FC<TokenIconProps> = ({
           <Box
             right="-0.5rem"
             bottom="-0.3rem"
-            position="absolute"
             overflow="hidden"
+            position="absolute"
             borderRadius="full"
           >
             <ChainIcon maxHeight={size} maxWidth={size} width="100%" />
@@ -198,9 +193,9 @@ const TokenIcon: FC<TokenIconProps> = ({
         )}
         {!simple && ChainIcon && (
           <Box
-            position="absolute"
-            bottom="-0.3rem"
             right="-0.5rem"
+            bottom="-0.3rem"
+            position="absolute"
             borderRadius="full"
           >
             <ChainIcon maxHeight={size} maxWidth={size} width="100%" />
@@ -212,7 +207,6 @@ const TokenIcon: FC<TokenIconProps> = ({
   if (url)
     return (
       <Box
-        bg="black"
         color="white"
         display="flex"
         position="relative"
@@ -287,7 +281,7 @@ const TokenIcon: FC<TokenIconProps> = ({
         >
           {(isLoading || loading) && (
             <Box position="absolute" top="-0.5rem" left="0.9rem">
-              <ProgressIndicator size={16} variant="loading" />
+              <ProgressIndicator size={loaderSize} variant="loading" />
             </Box>
           )}
           {iconSrc && (
