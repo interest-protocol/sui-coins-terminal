@@ -44,12 +44,9 @@ const CoinsManager: FC = () => {
         const dbCoinsMetadata: Record<string, CoinMetadataWithType> =
           await Promise.all(
             coinsType.map((type) =>
-              fetchCoinMetadata({ type, network, client: suiClient })
-                .then((data) => {
-                  console.log(data);
-                  return data;
-                })
-                .catch(),
+              fetchCoinMetadata({ type, network, client: suiClient }).then(
+                (data) => data,
+              ),
             ),
           ).then((data: ReadonlyArray<CoinMetadataWithType>) =>
             data.reduce(

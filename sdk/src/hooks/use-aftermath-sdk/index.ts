@@ -21,7 +21,7 @@ export const useAftermathSdk = () => ({
       .then((builtTx) => toBase64(builtTx));
 
     return fetch(
-      "https://trade-aggregator-api-staging.up.railway.app/api/hop/swap",
+      "https://trade-aggregator-api-staging.up.railway.app/api/aftermath/swap",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
