@@ -1,5 +1,3 @@
-import "@mysten/dapp-kit/dist/index.css";
-
 import { Button } from "@interest-protocol/ui-kit";
 import { ConnectModal } from "@mysten/dapp-kit";
 import { not } from "ramda";

@@ -1,6 +1,8 @@
 import { css } from "@emotion/react";
 
 export const GlobalStyles = css`
+  @import "https://cdn.jsdelivr.net/npm/react-loading-skeleton@3.5.0/dist/skeleton.css";
+  @import "https://cdn.jsdelivr.net/npm/@mysten/dapp-kit@0.14.25/dist/esm/index.css";
   @font-face {
     font-family: "Proto";
     src: url("https://interest-protocol.github.io/fonts/proto/ProtoMono-Regular.eot");
