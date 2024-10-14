@@ -8,8 +8,8 @@
     "dist"
   ],
   "src": "src/index.tsx",
-  "main": "dist/sui-coins-terminal.cjs.js",
-  "module": "dist/sui-coins-terminal.es.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
   "types": "dist/types/index.d.ts",
   "keywords": [
     "Sui Coins",
