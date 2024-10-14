@@ -74,13 +74,8 @@ export const GlobalStyles = css`
     font-family: "Satoshi";
   }
 
-  #swap-terminal html {
+  #swap-terminal {
     scroll-behavior: smooth;
-  }
-
-  #swap-terminal body,
-  #swap-terminal html {
-    overflow-x: hidden;
   }
 
   #swap-terminal a {

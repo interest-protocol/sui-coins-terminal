@@ -18,8 +18,8 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0
       '@interest-protocol/ui-kit':
-        specifier: 0.3.1-beta
-        version: 0.3.1-beta(@types/react@18.3.11)
+        specifier: ^0.2.26-alpha
+        version: 0.2.26-alpha(@types/react@18.3.11)
       '@mysten/dapp-kit':
         specifier: ^0.14.17
         version: 0.14.25(@tanstack/react-query@5.59.8(react@18.3.1))(@types/react-dom@18.3.0)(@types/react@18.3.11)(babel-plugin-macros@3.1.0)(immer@9.0.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)
@@ -678,8 +678,8 @@ packages:
   '@interest-protocol/tokens@1.3.0':
     resolution: {integrity: sha512-zDh0eiZEe0ybhon9mgwvBt0p6FQ4sVFlg0W4Tj4joAA0HBr5FulbUxpkSbBvx6UN8RRTLrjbJFcuMBKTTloV7g==}
 
-  '@interest-protocol/ui-kit@0.3.1-beta':
-    resolution: {integrity: sha512-3esQu0OQBc3/DJ/NBxziQuICuxBr4PAs8PTWyS/RRBNXOdtXM4zTGNXBFgCGt6gMQAQdm0jZkTY8ru7A0rNUUQ==}
+  '@interest-protocol/ui-kit@0.2.26-alpha':
+    resolution: {integrity: sha512-7c/p17tXmC+hWM9ELD3ue+M+uqZzb1u9kpMyb3rC4r1uEO4O+vcW2E2xWktk84rus0RJODzX3JfuN8obL+FDdQ==}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -1210,9 +1210,6 @@ packages:
 
   '@stylin.js/elements@1.0.3':
     resolution: {integrity: sha512-QNf0yBFoQS7xZh+esoNoslhhWcJ0+uSiijx+Q9+eV8H4IdEq5bwofYsg6n1YdaRvhfQMGowDS2PwRL1+Ic4ceg==}
-
-  '@stylin.js/react@1.0.3':
-    resolution: {integrity: sha512-wb/a8tXLKF6hDCF8GhRhzfsGwLM7bvFh5Tl7K98HC7Zcy9Y2uTb32bzrKqwXA8v7GEM1Uhu+inza6k6x5lN4aQ==}
 
   '@stylin.js/react@1.0.4-alpha.0':
     resolution: {integrity: sha512-rSit55chBGFeoTAjp1esp4f+9GWa3MbvQr1rz1vBp47G3p+WhZcGYEg2uHL56ex1hs31t2d5kNOgU1uxVapk8g==}
@@ -2374,11 +2371,6 @@ packages:
   fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
-  fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -3276,16 +3268,6 @@ packages:
   pidtree@0.6.0:
     resolution: {integrity: sha512-eG2dWTVw5bzqGRztnHExczNxt5VGsE6OwTeCG3fdUf9KBsZzO3R5OIIIzWR+iZA0NtZ+RDVdaoE2dK1cn6jH4g==}
     engines: {node: '>=0.10'}
-    hasBin: true
-
-  playwright-core@1.48.0:
-    resolution: {integrity: sha512-RBvzjM9rdpP7UUFrQzRwR8L/xR4HyC1QXMzGYTbf1vjw25/ya9NRAVnXi/0fvFopjebvyPzsmoK58xxeEOaVvA==}
-    engines: {node: '>=18'}
-    hasBin: true
-
-  playwright@1.48.0:
-    resolution: {integrity: sha512-qPqFaMEHuY/ug8o0uteYJSRfMGFikhUysk8ZvAtfKmUK3kc/6oNl/y3EczF8OFGYIi/Ex2HspMfzYArk6+XQSA==}
-    engines: {node: '>=18'}
     hasBin: true
 
   possible-typed-array-names@1.0.0:
@@ -4649,13 +4631,12 @@ snapshots:
     dependencies:
       '@openzeppelin/contracts-upgradeable': 4.9.6
 
-  '@interest-protocol/ui-kit@0.3.1-beta(@types/react@18.3.11)':
+  '@interest-protocol/ui-kit@0.2.26-alpha(@types/react@18.3.11)':
     dependencies:
       '@emotion/react': 11.13.3(@types/react@18.3.11)(react@18.3.1)
-      '@stylin.js/react': 1.0.3(@types/react@18.3.11)(react@18.3.1)
+      '@stylin.js/react': 1.1.1(@types/react@18.3.11)(react@18.3.1)
       '@types/react-modal': 3.16.3
       framer-motion: 10.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      playwright: 1.48.0
       ramda: 0.29.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -5297,16 +5278,6 @@ snapshots:
   '@stylin.js/elements@1.0.3(@types/react@18.3.11)(react@18.3.1)':
     dependencies:
       '@stylin.js/react': 1.1.1(@types/react@18.3.11)(react@18.3.1)
-    transitivePeerDependencies:
-      - '@types/react'
-      - react
-      - supports-color
-
-  '@stylin.js/react@1.0.3(@types/react@18.3.11)(react@18.3.1)':
-    dependencies:
-      '@emotion/react': 11.13.3(@types/react@18.3.11)(react@18.3.1)
-      '@emotion/styled': 11.13.0(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))(@types/react@18.3.11)(react@18.3.1)
-      '@stylin.js/core': 1.0.2(@emotion/react@11.13.3(@types/react@18.3.11)(react@18.3.1))
     transitivePeerDependencies:
       - '@types/react'
       - react
@@ -6789,9 +6760,6 @@ snapshots:
 
   fs.realpath@1.0.0: {}
 
-  fsevents@2.3.2:
-    optional: true
-
   fsevents@2.3.3:
     optional: true
 
@@ -7560,14 +7528,6 @@ snapshots:
   picomatch@2.3.1: {}
 
   pidtree@0.6.0: {}
-
-  playwright-core@1.48.0: {}
-
-  playwright@1.48.0:
-    dependencies:
-      playwright-core: 1.48.0
-    optionalDependencies:
-      fsevents: 2.3.2
 
   possible-typed-array-names@1.0.0: {}
 
