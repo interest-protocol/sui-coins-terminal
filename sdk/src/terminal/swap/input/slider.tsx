@@ -1,7 +1,7 @@
 import { Box } from "@interest-protocol/ui-kit";
+import { Slider } from "@interest-protocol/ui-kit";
 import { SUI_TYPE_ARG } from "@mysten/sui/utils";
 import BigNumber from "bignumber.js";
-import dynamic from "next/dynamic";
 import { FC } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
@@ -9,11 +9,6 @@ import { useWeb3 } from "../../../hooks/use-web3";
 import { FixedPointMath } from "../../../lib";
 import { ZERO_BIG_NUMBER } from "../../../utils";
 import { SwapForm } from "../swap.types";
-
-const Slider = dynamic(
-  import("@interest-protocol/ui-kit").then(({ Slider }) => Slider),
-  { ssr: false },
-);
 
 const SwapFormFieldSlider: FC = () => {
   const { coinsMap } = useWeb3();
