@@ -6,7 +6,7 @@ import type { RouterCompleteTradeRoute } from "aftermath-ts-sdk";
 export const useAftermathSdk = () => ({
   quote: (coinIn: string, coinOut: string, amountIn: string) =>
     fetch(
-      `https://trade-aggregator-api-production.up.railway.app/api/aftermath/quote?tokenIn=${coinIn}&tokenOut=${coinOut}&amountIn=${amountIn}`,
+      `https://trade-aggregator-api-staging.up.railway.app/api/aftermath/quote?tokenIn=${coinIn}&tokenOut=${coinOut}&amountIn=${amountIn}`,
       { headers: { accept: "*/*" } },
     ).then((response) => response.json?.()),
   swap: async (
