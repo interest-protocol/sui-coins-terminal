@@ -45,7 +45,7 @@ export const useSwap = () => {
       ? afSdk.swap(
           route,
           currentAccount.address,
-          +settings.slippage * 100,
+          +settings.slippage / 100,
           tx,
           suiClient,
         )
