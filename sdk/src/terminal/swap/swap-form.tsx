@@ -22,7 +22,7 @@ const Swap: FC = () => {
 
   return (
     <Box id="swap-terminal">
-      <Box display="flex" justifyContent="space-between">
+      <Box pb="xs" display="flex" justifyContent="space-between">
         <Box display="flex" alignItems="center" gap="xs">
           <LogoSVG maxWidth="1.6rem" maxHeight="1.6rem" width="100%" />
           <Typography
