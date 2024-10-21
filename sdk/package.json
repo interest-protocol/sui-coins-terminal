@@ -4,6 +4,7 @@
   "name": "@interest-protocol/sui-coins-terminal",
   "description": "The community coin of Sui",
   "license": "MIT",
+  "type": "module",
   "files": [
     "dist", "README.md"
   ],
