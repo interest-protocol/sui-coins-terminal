@@ -1,11 +1,13 @@
 {
   "private": false,
-  "version": "0.2.1",
+  "version": "0.2.2",
   "name": "@interest-protocol/sui-coins-terminal",
   "description": "The community coin of Sui",
   "license": "MIT",
+  "type": "commonjs",
   "files": [
-    "dist", "README.md"
+    "dist",
+    "README.md"
   ],
   "src": "src/index.tsx",
   "main": "dist/index.cjs.js",
