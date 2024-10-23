@@ -1,6 +1,5 @@
 import { Chain } from "@interest-protocol/sui-tokens";
 import { isValidSuiAddress } from "@mysten/sui/utils";
-import { empty } from "ramda";
 import { FC } from "react";
 import { useWatch } from "react-hook-form";
 import { useReadLocalStorage } from "usehooks-ts";
@@ -40,8 +39,6 @@ const SelectTokenModalBody: FC<SelectTokenModalBodyProps> = ({
   const favoriteTokenTypes = useReadLocalStorage<ReadonlyArray<string>>(
     `${LOCAL_STORAGE_VERSION}-sui-coins-${network}-favorite-tokens`,
   );
-
-  console.log({ coinsLoading, empty: empty({}) });
 
   const filterSelected = useWatch({ control, name: "filter" });
   const search = useWatch({ control, name: "search" });

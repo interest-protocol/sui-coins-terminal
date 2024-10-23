@@ -76,6 +76,8 @@ const SwapSummary: FC = () => {
       ? (differenceBetween * 100) / fromUSD - EXCHANGE_FEE_PERCENTAGE
       : null;
 
+  if (!Number(fromValue) || !Number(toValue)) return null;
+
   return (
     <Box display="flex" flexDirection="column" mb="m" gap="l">
       <Box bg="surface" px="m" py="2xs" borderRadius="xs">
