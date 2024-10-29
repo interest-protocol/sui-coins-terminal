@@ -1,14 +1,14 @@
-import { Box, Typography } from "@interest-protocol/ui-kit";
+import { Box } from "@interest-protocol/ui-kit";
 import { FC } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { v4 } from "uuid";
 
-import { LogoSVG } from "../../components/svg";
 import Input from "./input";
 import Slider from "./input/slider";
 import { SwapForm } from "./swap.types";
 import SwapButton from "./swap-button";
 import SwapFlipToken from "./swap-flip-token";
+import SwapLogo from "./swap-logo";
 import SwapPoweredBy from "./swap-powered-by";
 import SwapSummary from "./swap-summary";
 import SwapUpdatePrice from "./swap-update-price";
@@ -23,18 +23,7 @@ const Swap: FC = () => {
   return (
     <Box id="swap-terminal">
       <Box pb="xs" display="flex" justifyContent="space-between">
-        <Box display="flex" alignItems="center" gap="xs">
-          <LogoSVG maxWidth="1.6rem" maxHeight="1.6rem" width="100%" />
-          <Typography
-            size="small"
-            variant="title"
-            fontWeight="700"
-            color="onSurface"
-            width="max-content"
-          >
-            SUI COINS
-          </Typography>
-        </Box>
+        <SwapLogo />
         <WalletButton />
       </Box>
       <Box display="flex" borderRadius="l" flexDirection="column">
