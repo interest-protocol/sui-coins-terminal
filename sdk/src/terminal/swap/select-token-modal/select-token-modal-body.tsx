@@ -34,7 +34,7 @@ const SelectTokenModalBody: FC<SelectTokenModalBodyProps> = ({
 }) => {
   const network = useNetwork();
   const { data, isLoading } = useStrictTokens();
-  const { coins, coinsMap, coinsLoading } = useWeb3();
+  const { coins, coinsMap, loading } = useWeb3();
   const favoriteTokenTypes = useReadLocalStorage<ReadonlyArray<string>>(
     `${LOCAL_STORAGE_VERSION}-sui-coins-${network}-favorite-tokens`,
   );
@@ -151,7 +151,7 @@ const SelectTokenModalBody: FC<SelectTokenModalBodyProps> = ({
       />
     );
 
-  if (coinsLoading) return <FetchingToken />;
+  if (loading) return <FetchingToken />;
 
   const noWalletToShow = filterSelected == TokenOrigin.Wallet && !coins?.length;
 
