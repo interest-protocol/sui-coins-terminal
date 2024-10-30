@@ -141,7 +141,7 @@ const SwapSummary: FC = () => {
           </Typography>
           <Box textAlign="right">
             {isLoading ? (
-              <Box width="1rem" height="1rem" mt="-1.2rem">
+              <Box width="1rem" height="1rem">
                 <ProgressIndicator variant="loading" size={16} />
               </Box>
             ) : (
@@ -168,7 +168,7 @@ const SwapSummary: FC = () => {
           </Typography>
           <Box textAlign="right">
             {isLoading ? (
-              <Box width="1rem" height="1rem" mt="-1.2rem">
+              <Box width="1rem" height="1rem">
                 <ProgressIndicator variant="loading" size={16} />
               </Box>
             ) : (

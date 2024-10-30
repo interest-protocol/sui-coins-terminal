@@ -12,7 +12,11 @@ const SwapLogo: FC = () => {
   const from = useWatch({ control, name: "from.type" });
 
   return (
-    <a href={`https://www.suicoins.com?from=${from}&to=${to}`}>
+    <a
+      target="_blank"
+      rel="noreferrer"
+      href={`https://www.suicoins.com?from=${from}&to=${to}`}
+    >
       <Box display="flex" alignItems="center" gap="xs">
         <LogoSVG maxWidth="1.6rem" maxHeight="1.6rem" width="100%" />
         <Typography

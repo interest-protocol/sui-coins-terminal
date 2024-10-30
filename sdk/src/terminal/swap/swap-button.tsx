@@ -10,6 +10,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 import toast from "react-hot-toast";
 import invariant from "tiny-invariant";
 
+import { useWhitelistedWallets } from "../../hooks/use-whiltelist-wallets";
 import {
   showTXSuccessToast,
   signAndExecute,
@@ -54,12 +55,19 @@ const SwapButton: FC = () => {
     name: "readyToSwap",
   });
 
+  const { data: whitelistedWallets } = useWhitelistedWallets();
+
   const handleSwap = async () => {
     if (!readyToSwap) return;
 
     const toastId = toast.loading("Swapping...");
     try {
       invariant(currentAccount, "Need to connect wallet");
+
+      invariant(
+        whitelistedWallets?.includes(formSwap.getValues("projectAddress")),
+        "Not allowed to Swap",
+      );
 
       formSwap.setValue("swapping", true);
 
