@@ -16,22 +16,13 @@ import { Network } from "../../constants";
 import { useNetwork } from "../../hooks/use-network";
 import { ISuiNsContext } from "./suins.types";
 
-export const testnetClient = new SuiClient({
-  url: getFullnodeUrl("testnet"),
-});
 export const mainnetClient = new SuiClient({
   url: getFullnodeUrl("mainnet"),
 });
 
 export const suiClientRecord = {
   [Network.MAINNET]: mainnetClient,
-  [Network.TESTNET]: testnetClient,
 } as Record<Network, SuiClient>;
-
-const testnetSuiNs = new SuinsClient({
-  client: testnetClient as any,
-  network: "testnet",
-});
 
 export const suiNSMainNetProvider = new SuinsClient({
   client: mainnetClient as any,
@@ -40,7 +31,6 @@ export const suiNSMainNetProvider = new SuinsClient({
 
 const suiNsClientRecord = {
   [Network.MAINNET]: suiNSMainNetProvider,
-  [Network.TESTNET]: testnetSuiNs,
 } as Record<Network, SuinsClient>;
 
 const suiNsContext = createContext<ISuiNsContext>({} as ISuiNsContext);

@@ -3,20 +3,19 @@ import { FC } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 import { v4 } from "uuid";
 
-import { CoinObject } from "../../../components/web3-manager/coins-manager/coins-manager.types";
 import { LOCAL_STORAGE_VERSION } from "../../../constants";
-import { STRICT_TOKENS, STRICT_TOKENS_MAP } from "../../../constants/coins";
 import { useNetwork } from "../../../hooks/use-network";
+import { useStrictTokens } from "../../../hooks/use-strict-tokens";
 import { useWeb3 } from "../../../hooks/use-web3";
 import TokenIcon from "../../../token-icon";
 import { coinDataToCoinObject } from "../../../utils";
+import { FavoriteTokensProps } from "./select-token-modal.types";
 import { metadataToCoin } from "./select-token-modal.utils";
 
-const FavoriteTokens: FC<{ onSelectToken: (coin: CoinObject) => void }> = ({
-  onSelectToken,
-}) => {
+const FavoriteTokens: FC<FavoriteTokensProps> = ({ onSelectToken }) => {
   const network = useNetwork();
   const { coinsMap } = useWeb3();
+  const { data } = useStrictTokens();
   const favoriteTokenTypes = useReadLocalStorage<ReadonlyArray<string>>(
     `${LOCAL_STORAGE_VERSION}-sui-coins-${network}-favorite-tokens`,
   );
@@ -25,7 +24,7 @@ const FavoriteTokens: FC<{ onSelectToken: (coin: CoinObject) => void }> = ({
     `${LOCAL_STORAGE_VERSION}-sui-coins-${network}-favorite-tokens-meta`,
   );
 
-  const defaultFavoriteTokens = STRICT_TOKENS[network].slice(0, 2);
+  const defaultFavoriteTokens = data?.strictTokens.slice(0, 2) ?? [];
   const safeFavoriteTokens = favoriteTokenTypes?.filter(
     (type) => !defaultFavoriteTokens.some((token) => token.type === type),
   );
@@ -44,7 +43,7 @@ const FavoriteTokens: FC<{ onSelectToken: (coin: CoinObject) => void }> = ({
   const handleSelectToken = async (type: string) => {
     if (coinsMap[type]) return onSelectToken(coinsMap[type]);
 
-    const token = STRICT_TOKENS_MAP[network][type];
+    const token = data?.strictTokensMap[type];
 
     if (token) return onSelectToken(coinDataToCoinObject(token));
 

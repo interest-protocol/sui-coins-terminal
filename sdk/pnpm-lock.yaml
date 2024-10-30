@@ -12,14 +12,11 @@ importers:
         specifier: ^11.11.1
         version: 11.13.3(@types/react@18.3.11)(react@18.3.1)
       '@interest-protocol/sui-tokens':
-        specifier: ^2.0.4
-        version: 2.2.0
-      '@interest-protocol/tokens':
-        specifier: ^1.3.0
-        version: 1.3.0
+        specifier: ^4.0.0
+        version: 4.0.0
       '@interest-protocol/ui-kit':
-        specifier: ^0.2.26-alpha
-        version: 0.2.26-alpha(@types/react@18.3.11)
+        specifier: 0.3.1-beta
+        version: 0.3.1-beta(@types/react@18.3.11)
       '@mysten/dapp-kit':
         specifier: ^0.14.17
         version: 0.14.25(@tanstack/react-query@5.59.8(react@18.3.1))(@types/react-dom@18.3.0)(@types/react@18.3.11)(babel-plugin-macros@3.1.0)(immer@9.0.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)
@@ -672,14 +669,11 @@ packages:
   '@improved/node@1.1.1':
     resolution: {integrity: sha512-ePDxG9UuU9Kobk90ZUjtmDW8IT9U7aRb1/Rl9683MRNM+ur0ocHL2v7TPH2ajTiVSBUFbbeW8vKIt9jrb0JIAA==}
 
-  '@interest-protocol/sui-tokens@2.2.0':
-    resolution: {integrity: sha512-qPUowcRhgZ5yeit9Kg6rQdgZzQF1SW3Q4yH4IKQedqLPt0alFjDLj1HNwl1Dl7yQNtvyBS8XIoF8aboCgJBGhA==}
+  '@interest-protocol/sui-tokens@4.0.0':
+    resolution: {integrity: sha512-rcxqaaKiTqcvEt3xfWjFCHAaXG5BZ0qBOJiuqPY4ROVQhpnCrYtnxkIsy+OM5nR/5sCaRfZZB7yTQ4SsHHeU9w==}
 
-  '@interest-protocol/tokens@1.3.0':
-    resolution: {integrity: sha512-zDh0eiZEe0ybhon9mgwvBt0p6FQ4sVFlg0W4Tj4joAA0HBr5FulbUxpkSbBvx6UN8RRTLrjbJFcuMBKTTloV7g==}
-
-  '@interest-protocol/ui-kit@0.2.26-alpha':
-    resolution: {integrity: sha512-7c/p17tXmC+hWM9ELD3ue+M+uqZzb1u9kpMyb3rC4r1uEO4O+vcW2E2xWktk84rus0RJODzX3JfuN8obL+FDdQ==}
+  '@interest-protocol/ui-kit@0.3.1-beta':
+    resolution: {integrity: sha512-3esQu0OQBc3/DJ/NBxziQuICuxBr4PAs8PTWyS/RRBNXOdtXM4zTGNXBFgCGt6gMQAQdm0jZkTY8ru7A0rNUUQ==}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -785,9 +779,6 @@ packages:
 
   '@open-rpc/client-js@1.8.1':
     resolution: {integrity: sha512-vV+Hetl688nY/oWI9IFY0iKDrWuLdYhf7OIKI6U1DcnJV7r4gAgwRJjEr1QVYszUc0gjkHoQJzqevmXMGLyA0g==}
-
-  '@openzeppelin/contracts-upgradeable@4.9.6':
-    resolution: {integrity: sha512-m4iHazOsOCv1DgM7eD7GupTJ+NFVujRZt1wzddDPSVGpWdKq1SKkla5htKG7+IS4d2XOCtzkUNwRZ7Vq5aEUMA==}
 
   '@pkgr/core@0.1.1':
     resolution: {integrity: sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==}
@@ -2371,6 +2362,11 @@ packages:
   fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
+  fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -3268,6 +3264,16 @@ packages:
   pidtree@0.6.0:
     resolution: {integrity: sha512-eG2dWTVw5bzqGRztnHExczNxt5VGsE6OwTeCG3fdUf9KBsZzO3R5OIIIzWR+iZA0NtZ+RDVdaoE2dK1cn6jH4g==}
     engines: {node: '>=0.10'}
+    hasBin: true
+
+  playwright-core@1.48.2:
+    resolution: {integrity: sha512-sjjw+qrLFlriJo64du+EK0kJgZzoQPsabGF4lBvsid+3CNIZIYLgnMj9V6JY5VhM2Peh20DJWIVpVljLLnlawA==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  playwright@1.48.2:
+    resolution: {integrity: sha512-NjYvYgp4BPmiwfe31j4gHLa3J7bD2WiBz8Lk2RoSsmX38SVIARZ18VYjxLjAcDsAhA+F4iSEXTSGgjua0rrlgQ==}
+    engines: {node: '>=18'}
     hasBin: true
 
   possible-typed-array-names@1.0.0:
@@ -4625,18 +4631,15 @@ snapshots:
 
   '@improved/node@1.1.1': {}
 
-  '@interest-protocol/sui-tokens@2.2.0': {}
+  '@interest-protocol/sui-tokens@4.0.0': {}
 
-  '@interest-protocol/tokens@1.3.0':
-    dependencies:
-      '@openzeppelin/contracts-upgradeable': 4.9.6
-
-  '@interest-protocol/ui-kit@0.2.26-alpha(@types/react@18.3.11)':
+  '@interest-protocol/ui-kit@0.3.1-beta(@types/react@18.3.11)':
     dependencies:
       '@emotion/react': 11.13.3(@types/react@18.3.11)(react@18.3.1)
       '@stylin.js/react': 1.1.1(@types/react@18.3.11)(react@18.3.1)
       '@types/react-modal': 3.16.3
       framer-motion: 10.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      playwright: 1.48.2
       ramda: 0.29.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -4854,8 +4857,6 @@ snapshots:
       - bufferutil
       - encoding
       - utf-8-validate
-
-  '@openzeppelin/contracts-upgradeable@4.9.6': {}
 
   '@pkgr/core@0.1.1': {}
 
@@ -6760,6 +6761,9 @@ snapshots:
 
   fs.realpath@1.0.0: {}
 
+  fsevents@2.3.2:
+    optional: true
+
   fsevents@2.3.3:
     optional: true
 
@@ -7528,6 +7532,14 @@ snapshots:
   picomatch@2.3.1: {}
 
   pidtree@0.6.0: {}
+
+  playwright-core@1.48.2: {}
+
+  playwright@1.48.2:
+    dependencies:
+      playwright-core: 1.48.2
+    optionalDependencies:
+      fsevents: 2.3.2
 
   possible-typed-array-names@1.0.0: {}
 

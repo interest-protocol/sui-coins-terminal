@@ -3,6 +3,7 @@ import { FC, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { useNetwork } from "../../hooks/use-network";
+import { useStrictTokens } from "../../hooks/use-strict-tokens";
 import { useWeb3 } from "../../hooks/use-web3";
 import { getCoin, getPrices, isSui } from "../../utils";
 import { SwapForm, SwapInitManagerProps, SwapToken } from "./swap.types";
@@ -11,6 +12,8 @@ const SwapInitManager: FC<SwapInitManagerProps> = ({ to, from }) => {
   const { coinsMap } = useWeb3();
   const form = useFormContext<SwapForm>();
   const network = useNetwork();
+
+  const { data } = useStrictTokens();
 
   const getSwapToken = async (
     type: `0x${string}`,
@@ -29,7 +32,7 @@ const SwapInitManager: FC<SwapInitManagerProps> = ({ to, from }) => {
       };
     }
     if (typeof type === "string" && type.startsWith("0x")) {
-      const coin = await getCoin(type, network, coinsMap);
+      const coin = await getCoin(type, network, coinsMap, data);
 
       return {
         ...coin,

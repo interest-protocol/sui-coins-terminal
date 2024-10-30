@@ -9,13 +9,12 @@ import {
 } from "../../components/web3-manager/coins-manager/coins-manager.types";
 import { Network } from "../../constants";
 import {
-  STRICT_TOKENS,
-  STRICT_TOKENS_TYPE,
   SUI_BRIDGE_TOKENS,
   SUI_BRIDGE_TOKENS_TYPE,
   WORMHOLE_TOKENS,
   WORMHOLE_TOKENS_TYPE,
 } from "../../constants/coins";
+import { StrictTokens } from "../../hooks/use-strict-tokens";
 import { CoinData, CoinMetadataWithType } from "../../interface";
 import { isSameStructTag } from "../address";
 import { ZERO_BIG_NUMBER } from "../big-number";
@@ -68,23 +67,27 @@ export const getCoin = async (
   type: `0x${string}`,
   network: Network,
   coinsMap: CoinsMap,
+  strictTokens?: StrictTokens,
 ): Promise<Token> =>
   new Promise((resolve) => {
     if (
-      STRICT_TOKENS_TYPE[network].includes(type) ??
       WORMHOLE_TOKENS_TYPE[network].includes(type) ??
       SUI_BRIDGE_TOKENS_TYPE[network].includes(type)
     )
       return resolve(
-        STRICT_TOKENS[network].find(
+        WORMHOLE_TOKENS[network].find(
           ({ type: strictType }) => type === strictType,
         ) ??
-          WORMHOLE_TOKENS[network].find(
-            ({ type: strictType }) => type === strictType,
-          ) ??
           SUI_BRIDGE_TOKENS[network].find(
             ({ type: strictType }) => type === strictType,
           )!,
+      );
+
+    if (strictTokens && strictTokens.strictTokensType.includes(type))
+      return resolve(
+        strictTokens.strictTokens.find(
+          ({ type: strictType }) => type === strictType,
+        )!,
       );
 
     if (coinsMap[type]) return resolve(coinObjectToToken(coinsMap[type]));

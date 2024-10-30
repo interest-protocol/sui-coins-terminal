@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-duplicate-enum-values */
-import { Chain, STRICT_LIST, Token } from "@interest-protocol/sui-tokens";
-import { SUI_TYPE_ARG } from "@mysten/sui/utils";
+import { Chain, Token } from "@interest-protocol/sui-tokens";
+import { normalizeStructTag, SUI_TYPE_ARG } from "@mysten/sui/utils";
 import { FC } from "react";
 
 import {
@@ -49,17 +49,7 @@ export enum TOKEN_SYMBOL {
   NATIVE_SUI_BRIDGE_ETH = "ETH",
 }
 
-export const SUI_TYPE_ARG_LONG =
-  "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI";
-
-export const TESTNET_BASE_COINS: Record<string, `0x${string}`> = {
-  SUI: SUI_TYPE_ARG,
-  BNB: "0xb8656a09a489819f07c444cb4a4a61a3b482a5ea994fd71b0a643ffc1c2f2dd0::ibnb::IBNB",
-  ETH: "0xb8656a09a489819f07c444cb4a4a61a3b482a5ea994fd71b0a643ffc1c2f2dd0::ieth::IETH",
-  BTC: "0xb8656a09a489819f07c444cb4a4a61a3b482a5ea994fd71b0a643ffc1c2f2dd0::ibtc::IBTC",
-  USDT: "0xb8656a09a489819f07c444cb4a4a61a3b482a5ea994fd71b0a643ffc1c2f2dd0::iusdt::IUSDT",
-  USDC: "0xb8656a09a489819f07c444cb4a4a61a3b482a5ea994fd71b0a643ffc1c2f2dd0::iusdc::IUSDC",
-};
+export const SUI_TYPE_ARG_LONG = normalizeStructTag(SUI_TYPE_ARG);
 
 export const MAINNET_BASE_COINS: Record<string, `0x${string}`> = {
   SUI: SUI_TYPE_ARG,
@@ -111,25 +101,12 @@ export const MAINNET_BASE_COINS: Record<string, `0x${string}`> = {
 };
 
 export const COIN_TYPE: Record<Network, Record<string, `0x${string}`>> = {
-  [Network.TESTNET]: {
-    ...TESTNET_BASE_COINS,
-    SUID: "0x02871464ed71b80969b32f2b23c981b085866485ba5368c0f59588fcc0dbce47::suid::SUID",
-  },
   [Network.MAINNET]: {
     ...MAINNET_BASE_COINS,
   },
 };
 
 export const COIN_TYPE_TO_SYMBOL = {
-  [Network.TESTNET]: {
-    [COIN_TYPE[Network.TESTNET].BNB]: TOKEN_SYMBOL.BNB,
-    [COIN_TYPE[Network.TESTNET].ETH]: TOKEN_SYMBOL.ETH,
-    [COIN_TYPE[Network.TESTNET].BTC]: TOKEN_SYMBOL.BTC,
-    [COIN_TYPE[Network.TESTNET].USDT]: TOKEN_SYMBOL.USDT,
-    [COIN_TYPE[Network.TESTNET].USDC]: TOKEN_SYMBOL.USDC,
-    [COIN_TYPE[Network.TESTNET].SUI]: TOKEN_SYMBOL.SUI,
-    [COIN_TYPE[Network.TESTNET].SUID]: TOKEN_SYMBOL.SUID,
-  },
   [Network.MAINNET]: {
     [COIN_TYPE[Network.MAINNET].SUI]: TOKEN_SYMBOL.SUI,
     [COIN_TYPE[Network.MAINNET].NATIVE_WORMHOLE_ETH]: TOKEN_SYMBOL.ETH,
@@ -160,15 +137,6 @@ export const COIN_TYPE_TO_SYMBOL = {
 };
 
 export const COIN_DECIMALS = {
-  [Network.TESTNET]: {
-    [COIN_TYPE[Network.TESTNET].BTC]: 9,
-    [COIN_TYPE[Network.TESTNET].ETH]: 9,
-    [COIN_TYPE[Network.TESTNET].BNB]: 9,
-    [COIN_TYPE[Network.TESTNET].USDT]: 9,
-    [COIN_TYPE[Network.TESTNET].USDC]: 9,
-    [COIN_TYPE[Network.TESTNET].SUI]: 9,
-    [COIN_TYPE[Network.TESTNET].SUID]: 9,
-  },
   [Network.MAINNET]: {
     [COIN_TYPE[Network.MAINNET].SUI]: 9,
     [COIN_TYPE[Network.MAINNET].FUD]: 5,
@@ -193,43 +161,6 @@ export const COIN_DECIMALS = {
 };
 
 export const COINS: Record<Network, Record<string, Token>> = {
-  [Network.TESTNET]: {
-    ETH: {
-      decimals: COIN_DECIMALS[Network.TESTNET][COIN_TYPE[Network.TESTNET].ETH],
-      symbol: TOKEN_SYMBOL.ETH,
-      type: COIN_TYPE[Network.TESTNET].ETH,
-    },
-    BTC: {
-      decimals: COIN_DECIMALS[Network.TESTNET][COIN_TYPE[Network.TESTNET].BTC],
-      symbol: TOKEN_SYMBOL.BTC,
-      type: COIN_TYPE[Network.TESTNET].BTC,
-    },
-    BNB: {
-      decimals: COIN_DECIMALS[Network.TESTNET][COIN_TYPE[Network.TESTNET].BNB],
-      symbol: TOKEN_SYMBOL.BNB,
-      type: COIN_TYPE[Network.TESTNET].BNB,
-    },
-    SUI: {
-      decimals: COIN_DECIMALS[Network.TESTNET][COIN_TYPE[Network.TESTNET].SUI],
-      symbol: TOKEN_SYMBOL.SUI,
-      type: COIN_TYPE[Network.TESTNET].SUI,
-    },
-    USDC: {
-      decimals: COIN_DECIMALS[Network.TESTNET][COIN_TYPE[Network.TESTNET].USDC],
-      symbol: TOKEN_SYMBOL.USDC,
-      type: COIN_TYPE[Network.TESTNET].USDC,
-    },
-    USDT: {
-      decimals: COIN_DECIMALS[Network.TESTNET][COIN_TYPE[Network.TESTNET].USDT],
-      symbol: TOKEN_SYMBOL.USDT,
-      type: COIN_TYPE[Network.TESTNET].USDT,
-    },
-    SUID: {
-      decimals: COIN_DECIMALS[Network.TESTNET][COIN_TYPE[Network.TESTNET].SUI],
-      symbol: TOKEN_SYMBOL.SUID,
-      type: COIN_TYPE[Network.TESTNET].SUID,
-    },
-  },
   [Network.MAINNET]: {
     SUI: {
       decimals: COIN_DECIMALS[Network.MAINNET][COIN_TYPE[Network.MAINNET].SUI],
@@ -458,21 +389,6 @@ export const TOKEN_ICONS: Record<
   Network,
   Record<string, string | FC<SVGProps>>
 > = {
-  [Network.TESTNET]: {
-    SUI: SUISVG,
-    ETH: ETHSVG,
-    USDC: USDCSVG,
-    USDT: USDTSVG,
-    BTC: BTCSVG,
-    ADA: ADASVG,
-    BNB: BNBSVG,
-    AVAX: AVAXSVG,
-    CELO: CELOSVG,
-    MATIC: MATICSVG,
-    FTM: FTMSVG,
-    DOGE: DOGESVG,
-    FLOKI: FLOKISVG,
-  },
   [Network.MAINNET]: {
     [SUI_TYPE_ARG_LONG]: SUISVG,
     [MAINNET_BASE_COINS.SUI]: SUISVG,
@@ -508,12 +424,10 @@ export const TOKEN_ICONS: Record<
 };
 
 export const SUI_BRIDGE_TOKENS_TYPE: Record<Network, ReadonlyArray<string>> = {
-  [Network.TESTNET]: [],
   [Network.MAINNET]: [MAINNET_BASE_COINS.NATIVE_SUI_BRIDGE_ETH],
 };
 
 export const WORMHOLE_TOKENS: Record<Network, Array<Token>> = {
-  [Network.TESTNET]: [],
   [Network.MAINNET]: [
     { ...COINS[Network.MAINNET].ETH_WORMHOLE_USDC, chain: "ETH" as Chain },
     { ...COINS[Network.MAINNET].ETH_WORMHOLE_USDT, chain: "ETH" as Chain },
@@ -526,92 +440,15 @@ export const WORMHOLE_TOKENS: Record<Network, Array<Token>> = {
     { ...COINS[Network.MAINNET].BSC_WORMHOLE_BTCB, chain: "BSC" as Chain },
     { ...COINS[Network.MAINNET].NATIVE_WORMHOLE_SOL, chain: "SOL" as Chain },
     { ...COINS[Network.MAINNET].NATIVE_WORMHOLE_WAVAX, chain: "AVAX" as Chain },
-  ].reduce(
-    (acc, curr) => {
-      if (acc.some(({ type }) => curr.type === type)) return acc;
-
-      return [...acc, curr];
-    },
-    STRICT_LIST.filter(({ bridge }) => bridge === "wormhole") as Array<Token>,
-  ),
+  ],
 };
 
 export const SUI_BRIDGE_TOKENS: Record<Network, Array<Token>> = {
-  [Network.TESTNET]: [],
   [Network.MAINNET]: [
     { ...COINS[Network.MAINNET].NATIVE_SUI_BRIDGE_ETH, chain: "ETH" as Chain },
-  ].reduce(
-    (acc, curr) => {
-      if (acc.some(({ type }) => curr.type === type)) return acc;
-
-      return [...acc, curr];
-    },
-    STRICT_LIST.filter(({ bridge }) => bridge === "sui") as Array<
-      Omit<Token, "name">
-    >,
-  ),
+  ],
 };
 
 export const WORMHOLE_TOKENS_TYPE: Record<Network, ReadonlyArray<string>> = {
-  [Network.TESTNET]: [],
   [Network.MAINNET]: WORMHOLE_TOKENS[Network.MAINNET].map(({ type }) => type),
-};
-
-export const STRICT_TOKENS_TYPE: Record<Network, ReadonlyArray<string>> = {
-  [Network.TESTNET]: [
-    TESTNET_BASE_COINS.SUI,
-    TESTNET_BASE_COINS.BNB,
-    TESTNET_BASE_COINS.BTC,
-    TESTNET_BASE_COINS.ETH,
-    TESTNET_BASE_COINS.USDC,
-    TESTNET_BASE_COINS.USDT,
-  ],
-  [Network.MAINNET]: SUI_BRIDGE_TOKENS[Network.MAINNET].map(({ type }) => type),
-};
-
-export const STRICT_TOKENS: Record<Network, Array<Token>> = {
-  [Network.TESTNET]: [
-    COINS[Network.TESTNET].SUI,
-    COINS[Network.TESTNET].BNB,
-    COINS[Network.TESTNET].BTC,
-    COINS[Network.TESTNET].ETH,
-    COINS[Network.TESTNET].USDC,
-    COINS[Network.TESTNET].USDT,
-    ...WORMHOLE_TOKENS[Network.TESTNET],
-    ...SUI_BRIDGE_TOKENS[Network.TESTNET],
-  ],
-  [Network.MAINNET]: Array(...STRICT_LIST),
-};
-
-export const STRICT_TOKENS_MAP: Record<Network, Record<string, Token>> = {
-  [Network.TESTNET]: [
-    COINS[Network.TESTNET].SUI,
-    COINS[Network.TESTNET].BNB,
-    COINS[Network.TESTNET].BTC,
-    COINS[Network.TESTNET].ETH,
-    COINS[Network.TESTNET].USDC,
-    COINS[Network.TESTNET].USDT,
-    ...WORMHOLE_TOKENS[Network.TESTNET],
-    ...SUI_BRIDGE_TOKENS[Network.TESTNET],
-  ].reduce((acc, curr) => ({ ...acc, [curr.type]: curr }), {}),
-  [Network.MAINNET]: STRICT_LIST.reduce(
-    (acc, curr) => ({ ...acc, [curr.type]: curr }),
-    {},
-  ),
-};
-
-export const CMC_COIN_ID = {
-  [Network.TESTNET]: {
-    [SUI_TYPE_ARG_LONG]: 20947,
-    [TESTNET_BASE_COINS.SUI]: 20947,
-    [TESTNET_BASE_COINS.BNB]: 1839,
-    [TESTNET_BASE_COINS.BTC]: 1,
-    [TESTNET_BASE_COINS.USDC]: 3408,
-    [TESTNET_BASE_COINS.USDT]: 825,
-    [TESTNET_BASE_COINS.ETH]: 1027,
-  },
-  [Network.MAINNET]: {
-    [SUI_TYPE_ARG_LONG]: 20947,
-    [MAINNET_BASE_COINS.SUI]: 20947,
-  },
 };

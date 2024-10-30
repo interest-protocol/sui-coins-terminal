@@ -47,6 +47,10 @@ export interface SearchTokenForm {
   filter: TokenOrigin;
 }
 
+export interface FavoriteTokensProps {
+  onSelectToken: (coin: CoinObject) => void;
+}
+
 export interface SelectTokenModalBodyProps {
   control: Control<SearchTokenForm>;
   handleSelectToken: (coin: CoinObject) => void;

@@ -7,7 +7,6 @@ import { Network } from "../../constants";
 const LOCAL_NETWORK_KEY = "suicoins:network";
 
 const { networkConfig } = createNetworkConfig({
-  [Network.TESTNET]: { url: getFullnodeUrl("testnet") },
   [Network.MAINNET]: { url: getFullnodeUrl("mainnet") },
 });
 

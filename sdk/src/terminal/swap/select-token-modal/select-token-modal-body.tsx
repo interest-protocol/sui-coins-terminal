@@ -7,15 +7,13 @@ import { useReadLocalStorage } from "usehooks-ts";
 import { CoinObject } from "../../../components/web3-manager/coins-manager/coins-manager.types";
 import { LOCAL_STORAGE_VERSION, Network } from "../../../constants";
 import {
-  STRICT_TOKENS,
-  STRICT_TOKENS_MAP,
-  STRICT_TOKENS_TYPE,
   SUI_BRIDGE_TOKENS,
   SUI_BRIDGE_TOKENS_TYPE,
   WORMHOLE_TOKENS,
   WORMHOLE_TOKENS_TYPE,
 } from "../../../constants/coins";
 import { useNetwork } from "../../../hooks/use-network";
+import { useStrictTokens } from "../../../hooks/use-strict-tokens";
 import { useWeb3 } from "../../../hooks/use-web3";
 import { CoinMetadataWithType } from "../../../interface";
 import { coinDataToCoinObject, fetchCoinMetadata } from "../../../utils";
@@ -35,6 +33,7 @@ const SelectTokenModalBody: FC<SelectTokenModalBodyProps> = ({
   handleSelectToken: onSelectToken,
 }) => {
   const network = useNetwork();
+  const { data, isLoading } = useStrictTokens();
   const { coins, coinsMap, coinsLoading } = useWeb3();
   const favoriteTokenTypes = useReadLocalStorage<ReadonlyArray<string>>(
     `${LOCAL_STORAGE_VERSION}-sui-coins-${network}-favorite-tokens`,
@@ -46,7 +45,11 @@ const SelectTokenModalBody: FC<SelectTokenModalBodyProps> = ({
   const handleSelectToken = async (type: string, chain?: Chain) => {
     if (coinsMap[type]) return onSelectToken(coinsMap[type]);
 
-    const token = STRICT_TOKENS_MAP[network as Network][type];
+    if (!data) return;
+
+    const { strictTokensMap } = data;
+
+    const token = strictTokensMap[type];
 
     if (token) return onSelectToken(coinDataToCoinObject(token));
 
@@ -61,24 +64,27 @@ const SelectTokenModalBody: FC<SelectTokenModalBodyProps> = ({
   const isSearchAddress =
     isValidSuiAddress(search.split("::")[0]) && search.split("::").length > 2;
 
+  if (isLoading) return <FetchingToken />;
+
   if (
-    (!isSearchAddress && filterSelected === TokenOrigin.Strict) ||
-    (filterSelected === TokenOrigin.Strict &&
-      isSearchAddress &&
-      STRICT_TOKENS_TYPE[network as Network].includes(search))
+    data &&
+    ((!isSearchAddress && filterSelected === TokenOrigin.Strict) ||
+      (filterSelected === TokenOrigin.Strict &&
+        isSearchAddress &&
+        data.strictTokensType.includes(search)))
   )
     return (
       <ModalTokenBody
         handleSelectToken={handleSelectToken}
         tokens={[
-          ...STRICT_TOKENS[network as Network].filter(
+          ...data.strictTokens.filter(
             ({ symbol, type }) =>
               (!search ||
                 symbol.toLocaleLowerCase().includes(search.toLowerCase()) ||
                 type.includes(search)) &&
               favoriteTokenTypes?.includes(type),
           ),
-          ...STRICT_TOKENS[network as Network].filter(
+          ...data.strictTokens.filter(
             ({ symbol, type }) =>
               (!search ||
                 symbol.toLocaleLowerCase().includes(search.toLowerCase()) ||
