@@ -3,18 +3,18 @@ import useSWR from "swr";
 
 export interface StrictTokens {
   strictTokens: Array<Token>;
-  strictTokensType: ReadonlyArray<string>;
   strictTokensMap: Record<string, Token>;
+  strictTokensType: ReadonlyArray<string>;
 }
 
 export const useStrictTokens = () =>
-  useSWR<StrictTokens>(async () => {
+  useSWR<StrictTokens>("strict-tokens", async () => {
     const coins = await getSuiVerifiedCoins();
 
     return {
-      strictTokens: Array.from(coins),
-      strictTokenType: coins.map(({ type }) => type),
-      strictTokenMap: coins.reduce(
+      strictTokens: Array.from<Token>(coins),
+      strictTokensType: coins.map(({ type }) => type),
+      strictTokensMap: coins.reduce(
         (acc, curr) => ({ ...acc, [curr.type]: curr }),
         {},
       ),
