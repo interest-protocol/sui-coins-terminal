@@ -1,6 +1,6 @@
 {
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "@interest-protocol/sui-coins-terminal",
   "description": "The community coin of Sui",
   "license": "MIT",

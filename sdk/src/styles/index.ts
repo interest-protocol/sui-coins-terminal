@@ -69,7 +69,7 @@ export const GlobalStyles = css`
     font-style: normal;
   }
 
-  * {
+  #ipx-terminal * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -89,26 +89,27 @@ export const GlobalStyles = css`
     color: inherit;
     text-decoration: none;
   }
+
   /* width */
-  ::-webkit-scrollbar {
+  #ipx-terminal ::-webkit-scrollbar {
     width: 10px;
     padding: 2rem;
   }
 
   /* Track */
-  ::-webkit-scrollbar-track {
+  #ipx-terminal ::-webkit-scrollbar-track {
     border-radius: 0.5rem;
     background: transparent;
     transition: all 300ms ease-in-out;
   }
 
   /* Track on hover */
-  ::-webkit-scrollbar-track:hover {
+  #ipx-terminal ::-webkit-scrollbar-track:hover {
     background: #fff1;
   }
 
   /* Handle */
-  ::-webkit-scrollbar-thumb {
+  #ipx-terminal ::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 0.5rem;
     border: 5px solid transparent;
