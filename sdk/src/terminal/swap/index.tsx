@@ -50,11 +50,11 @@ const SwapInterface: FC<SwapInterfaceProps> = ({
         display="flex"
         maxWidth="25rem"
         overflowY="auto"
-        id="ipx-terminal"
         bg="lowContainer"
         borderRadius="xs"
         position="relative"
         flexDirection="column"
+        className="ipx-terminal"
         width="calc(95vw - 2rem)"
         maxHeight="calc(100vh - 5rem)"
       >

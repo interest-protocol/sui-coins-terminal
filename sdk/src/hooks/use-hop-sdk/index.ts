@@ -8,7 +8,7 @@ import { JSONQuoteResponse } from "../../terminal/swap/swap.types";
 export const useHopSdk = () => ({
   quote: (coinIn: string, coinOut: string, amountIn: string) =>
     fetch(
-      `https://trade-aggregator-api-staging.up.railway.app/api/hop/quote?tokenIn=${coinIn}&tokenOut=${coinOut}&amountIn=${amountIn}`,
+      `https://trade-aggregator-api-production.up.railway.app/api/hop/quote?tokenIn=${coinIn}&tokenOut=${coinOut}&amountIn=${amountIn}`,
     ).then((response) => response.json?.()) as Promise<JSONQuoteResponse>,
   swap: async (
     trade: Trade,
@@ -22,7 +22,7 @@ export const useHopSdk = () => ({
       .then((builtTx) => toBase64(builtTx));
 
     return fetch(
-      "https://trade-aggregator-api-staging.up.railway.app/api/hop/swap",
+      "https://trade-aggregator-api-production.up.railway.app/api/hop/swap",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

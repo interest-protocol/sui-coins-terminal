@@ -9,7 +9,6 @@ import { SwapForm } from "./swap.types";
 import SwapButton from "./swap-button";
 import SwapFlipToken from "./swap-flip-token";
 import SwapLogo from "./swap-logo";
-import SwapPoweredBy from "./swap-powered-by";
 import SwapSummary from "./swap-summary";
 import SwapUpdatePrice from "./swap-update-price";
 import WalletButton from "./wallet-button";
@@ -82,7 +81,6 @@ const Swap: FC = () => {
           </Box>
           <SwapSummary />
           <SwapButton />
-          <SwapPoweredBy />
         </Box>
       </Box>
     </Box>
