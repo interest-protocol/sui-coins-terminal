@@ -12,8 +12,6 @@ To setup the sdk, you just need to import the sdk on your Vanilla (HTML) project
 
 ## How to integrate
 
-### 2.1 Vanilla
-
 To integrate the terminal on the Vanilla code, you just need to add an empty `div` with the `id="suicoins-terminal"` and initialize the Sdk on the `script` tag.
 
 ```html
