@@ -1,15 +1,15 @@
 {
   "private": false,
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1",
   "name": "@interest-protocol/sui-coins-terminal-vanilla",
   "homepage": "https://terminal.suicoins.com",
   "description": "The vanilla terminal sdk for the SuiCoins",
-  "keywords": [],
-  "main": "dist/my-library.cjs.js",
-  "module": "dist/my-library.es.js",
-  "types": "dist/index.d.ts",
+  "keywords": ["SuiCoins", "Terminal", "Memecoin", "Sui"],
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "vite build",

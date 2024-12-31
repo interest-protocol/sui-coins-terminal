@@ -2,31 +2,15 @@
 
 Sui Coins terminal is built inside the website project to allow to trade on top of Hop or Aftermath (as client preference)
 
-## 1. How to setup
+## How to setup
 
-To setup the sdk, you just need to:
-
-### 1.1 Vanilla
-
-Import the sdk on your Vanilla (HTML) project.
+To setup the sdk, you just need to import the sdk on your Vanilla (HTML) project.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@interest-protocol/sui-coins-terminal-vanilla/dist/index.umd.js"></script>
 ```
 
-### 1.2 React
-
-Install the sdk on your React project.
-
-```zsh
-pnpm add @interest-protocol/sui-coins-terminal
-#or
-yarn add @interest-protocol/sui-coins-terminal
-#or
-npm install @interest-protocol/sui-coins-terminal
-```
-
-## 2. How to integrate
+## How to integrate
 
 ### 2.1 Vanilla
 
@@ -51,31 +35,6 @@ To integrate the terminal on the Vanilla code, you just need to add an empty `di
 ```
 
 **_Note_**: _To prevent that your terminal will access the default styles, you should pass add with `class="terminal"`_
-
-### 2.2 React
-
-To integrate the terminal on the React typescript code, you just need to import the `SwapTerminal` and setup the code.
-
-**_Note:_** _You must by default:_
-
-- `typeIn`: default selling token;
-- `typeOut`: default buying token;
-- `projectAddress`: default project address for _(future)_ fees.
-
-```tsx
-import { SwapTerminal } from "@interest-protocol/sui-coins-terminal";
-import type { FC } from "react";
-
-const Terminal: FC = () => (
-  <SwapTerminal
-    typeIn="0x2::sui::SUI" // SUI address
-    projectAddress="0xdb3a22be6a37c340c6fd3f67a7221dfb841c818442d856f5d17726f4bcf1c8af" // Project DAO address
-    typeOut="0x07ab9ba99abd9af0d687ae55079601192be5a12d1a21c8c4cd9f1a17519111e0::emoji::EMOJI" // Target coin address
-  />
-);
-
-export default Terminal;
-```
 
 ## Advanced
 

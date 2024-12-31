@@ -49,7 +49,7 @@ You can also use others attributes, such as:
 
 ## Contact Us
 
-- X: [@IPXSui](https://x.com/IPXSui)
+- X: [@Suicoins](https://x.com/Suicoins)
 - Discord: https://discord.com/invite/interestprotocol
 - Telegram: https://t.me/interestprotocol
 - Email: [contact@interestprotocol.com](mailto:contact@interestprotocol.com)
