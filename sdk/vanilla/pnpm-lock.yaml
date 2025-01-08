@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@interest-protocol/sui-coins-terminal':
-        specifier: 1.0.2
-        version: 1.0.2(@emotion/is-prop-valid@1.3.1)(@mysten/sui.js@0.50.1(typescript@5.6.2))(@types/react-dom@18.3.0)(@types/react@18.3.10)(babel-plugin-macros@3.1.0)(csstype@3.1.3)(immer@9.0.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
+        specifier: 1.1.0
+        version: 1.1.0(@emotion/is-prop-valid@1.3.1)(@mysten/sui.js@0.50.1(typescript@5.6.2))(@types/react-dom@18.3.0)(@types/react@18.3.10)(babel-plugin-macros@3.1.0)(bn.js@5.2.1)(csstype@3.1.3)(immer@9.0.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -118,6 +118,13 @@ packages:
     peerDependencies:
       graphql: ^15.5.0 || ^16.0.0 || ^17.0.0
       typescript: ^5.0.0
+
+  '@7kprotocol/sdk-ts@2.2.1':
+    resolution: {integrity: sha512-Sg5l+4VLHCDXvjRmJzkftg+d2ECmNskZRDOfaMAuYarnCdGzpxw3Wn9gMGF22Bcgq+tmK6I8lTN21SFD5EVueA==}
+    peerDependencies:
+      '@mysten/sui': ^1.17.0
+      bignumber.js: ^9.1.2
+      bn.js: ^5.2.1
 
   '@babel/code-frame@7.24.7':
     resolution: {integrity: sha512-BcYH1CVJBO9tvyIZ2jVeXgSIMvGZ2FDRvDdOIVQyuklNKSsx+eppDEBq/g47Ayw+RqNFE+URvOShmf+f/qwAlA==}
@@ -532,8 +539,8 @@ packages:
   '@improved/node@1.1.1':
     resolution: {integrity: sha512-ePDxG9UuU9Kobk90ZUjtmDW8IT9U7aRb1/Rl9683MRNM+ur0ocHL2v7TPH2ajTiVSBUFbbeW8vKIt9jrb0JIAA==}
 
-  '@interest-protocol/sui-coins-terminal@1.0.2':
-    resolution: {integrity: sha512-P8e8LL3LXRg6kYQ1g8eUw8BNgaQhiCMHwVS1n9F5Ksort5a7UEjOUKqypACMBeZ7bn/COBcM5jkgSAjm9B+G9Q==}
+  '@interest-protocol/sui-coins-terminal@1.1.0':
+    resolution: {integrity: sha512-Pcao9+7JK7tSwod9AP5itmwVP8HdAUIPkRc8WW5BWPLyTBzG1rCsSCNl3+mgQsyz9zzN9pN7WmczaMtLvpeo8g==}
     peerDependencies:
       react: ^18.3.1
       react-dom: ^18.3.1
@@ -1521,6 +1528,9 @@ packages:
 
   bignumber.js@9.1.2:
     resolution: {integrity: sha512-2/mKyZH9K85bzOEfhXDBFZTGd1CTs+5IHpeFQo9luiBG7hghdC851Pj2WAhb6E3R6b9tZj/XKhbg4fum+Kepug==}
+
+  bn.js@5.2.1:
+    resolution: {integrity: sha512-eXRvHzWyYPBuB4NBy0cmYQjGitUrtqwbvlzP3G6VFnNRbsZQIxQ10PbKKHt8gZ/HW/D/747aDl+QkDqg3KQLMQ==}
 
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -3813,6 +3823,12 @@ snapshots:
       graphql: 16.9.0
       typescript: 5.6.2
 
+  '@7kprotocol/sdk-ts@2.2.1(@mysten/sui@1.12.0(typescript@5.6.2))(bignumber.js@9.1.2)(bn.js@5.2.1)':
+    dependencies:
+      '@mysten/sui': 1.12.0(typescript@5.6.2)
+      bignumber.js: 9.1.2
+      bn.js: 5.2.1
+
   '@babel/code-frame@7.24.7':
     dependencies:
       '@babel/highlight': 7.24.7
@@ -4251,8 +4267,9 @@ snapshots:
 
   '@improved/node@1.1.1': {}
 
-  '@interest-protocol/sui-coins-terminal@1.0.2(@emotion/is-prop-valid@1.3.1)(@mysten/sui.js@0.50.1(typescript@5.6.2))(@types/react-dom@18.3.0)(@types/react@18.3.10)(babel-plugin-macros@3.1.0)(csstype@3.1.3)(immer@9.0.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)':
+  '@interest-protocol/sui-coins-terminal@1.1.0(@emotion/is-prop-valid@1.3.1)(@mysten/sui.js@0.50.1(typescript@5.6.2))(@types/react-dom@18.3.0)(@types/react@18.3.10)(babel-plugin-macros@3.1.0)(bn.js@5.2.1)(csstype@3.1.3)(immer@9.0.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)':
     dependencies:
+      '@7kprotocol/sdk-ts': 2.2.1(@mysten/sui@1.12.0(typescript@5.6.2))(bignumber.js@9.1.2)(bn.js@5.2.1)
       '@emotion/react': 11.13.3(@types/react@18.3.10)(react@18.3.1)
       '@interest-protocol/sui-tokens': 4.0.0
       '@interest-protocol/ui-kit': 0.3.1-beta(@types/react@18.3.10)
@@ -4291,6 +4308,7 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
       - babel-plugin-macros
+      - bn.js
       - csstype
       - immer
       - supports-color
@@ -5455,6 +5473,8 @@ snapshots:
   bech32@2.0.0: {}
 
   bignumber.js@9.1.2: {}
+
+  bn.js@5.2.1: {}
 
   brace-expansion@1.1.11:
     dependencies:
