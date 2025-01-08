@@ -1,21 +1,3 @@
-import { AftermathSVG, HopSVG } from "../../components/svg";
-import { Aggregator, AggregatorProps } from "./swap.types";
-
-export const AGGREGATORS_LIST: Record<Aggregator, AggregatorProps> = {
-  [Aggregator.Hop]: {
-    Icon: HopSVG,
-    key: Aggregator.Hop,
-    url: "https://hop.ag/",
-    name: "Hop Aggregator",
-  },
-  [Aggregator.Aftermath]: {
-    Icon: AftermathSVG,
-    key: Aggregator.Aftermath,
-    url: "https://aftermath.finance/",
-    name: "Aftermath",
-  },
-};
-
 export enum SwapMessagesEnum {
   leastOneSui = "You must have at least 1 SUI on your wallet",
   notEnoughToken = "You do not have enough tokens.",

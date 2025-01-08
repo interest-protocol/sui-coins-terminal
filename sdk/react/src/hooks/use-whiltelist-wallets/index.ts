@@ -7,3 +7,9 @@ export const useWhitelistedWallets = () =>
     "https://interest-protocol.github.io/sui-coins-terminal/whitelist.json",
     fetcher,
   );
+
+export const useWhitelistedSharedWallets = () =>
+  useSWR<Record<string, string>>(
+    "https://interest-protocol.github.io/sui-coins-terminal/shared-wallet.json",
+    fetcher,
+  );

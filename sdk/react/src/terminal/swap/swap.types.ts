@@ -1,10 +1,11 @@
+import type { QuoteResponse } from "@7kprotocol/sdk-ts";
 import type { Trade } from "@hop.ag/sdk";
 import type { Token } from "@interest-protocol/sui-tokens";
 import type { RouterCompleteTradeRoute } from "aftermath-ts-sdk";
 import type BigNumber from "bignumber.js";
 import type { FC } from "react";
 
-import { SVGProps } from "../../components/svg/svg.types";
+import type { SVGProps } from "../../components/svg/svg.types";
 
 export type JSONQuoteResponse = {
   trade: Trade;
@@ -24,6 +25,7 @@ export type SwapToken = {
 
 export enum Aggregator {
   Hop = "hop",
+  "7k" = "7k",
   Aftermath = "aftermath",
 }
 
@@ -44,7 +46,7 @@ export type SwapForm = {
   settings: ISwapSettings;
   lastFetchDate: number | null;
   from: SwapToken & { value: BigNumber };
-  route: JSONQuoteResponse | RouterCompleteTradeRoute | null;
+  route: JSONQuoteResponse | RouterCompleteTradeRoute | QuoteResponse | null;
 };
 
 export type SwapPreviewModalProps = {

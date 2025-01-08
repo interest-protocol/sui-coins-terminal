@@ -12,7 +12,7 @@ import { FixedPointMath } from "../../lib";
 import { ZERO_BIG_NUMBER } from "../../utils";
 import { useSwap } from "./swap.hooks";
 import { SwapForm } from "./swap.types";
-import { isAftermathRoute } from "./swap.utils";
+import { is7kRoute, isAftermathRoute } from "./swap.utils";
 
 const SwapSummary: FC = () => {
   const swap = useSwap();
@@ -30,7 +30,9 @@ const SwapSummary: FC = () => {
   const trackKey = route
     ? isAftermathRoute(route)
       ? route.coinOut.amount.toString()
-      : route.amount_out_with_fee.toString()
+      : is7kRoute(route)
+        ? route.returnAmountWithDecimal.toString()
+        : route.amount_out_with_fee.toString()
     : 0;
 
   const { data: fees, isLoading } = useSWR(

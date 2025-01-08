@@ -28,7 +28,7 @@ const SwapInterface: FC<SwapInterfaceProps> = ({
       settings: {
         interval: interval ?? "10",
         slippage: slippage ?? "0.1",
-        aggregator: aggregator ?? Aggregator.Hop,
+        aggregator: aggregator ?? Aggregator["7k"],
       },
     },
   });

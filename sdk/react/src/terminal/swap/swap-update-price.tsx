@@ -1,3 +1,4 @@
+import { QuoteResponse } from "@7kprotocol/sdk-ts";
 import { Box, Button, ProgressIndicator } from "@interest-protocol/ui-kit";
 import { RouterCompleteTradeRoute } from "aftermath-ts-sdk";
 import BigNumber from "bignumber.js";
@@ -8,6 +9,8 @@ import useSWR from "swr";
 import { useDebounce } from "use-debounce";
 
 import { RefreshSVG } from "../../components/svg";
+import { EXCHANGE_FEE } from "../../constants/fees";
+import { use7kSdk } from "../../hooks/use-7k-sdk";
 import { useAftermathSdk } from "../../hooks/use-aftermath-sdk";
 import { useHopSdk } from "../../hooks/use-hop-sdk";
 import { useNetwork } from "../../hooks/use-network";
@@ -34,11 +37,14 @@ const countdownRenderer =
   };
 
 const SwapUpdatePrice: FC = () => {
-  const hopSdk = useHopSdk();
   const network = useNetwork();
   const { coinsMap } = useWeb3();
-  const afSdk = useAftermathSdk();
   const { control, setValue, getValues } = useFormContext<SwapForm>();
+  const AGGREGATOR_ROUTER = {
+    [Aggregator.Hop]: useHopSdk(),
+    [Aggregator["7k"]]: use7kSdk(),
+    [Aggregator.Aftermath]: useAftermathSdk(),
+  };
 
   const coinInType = useWatch({
     control,
@@ -113,35 +119,22 @@ const SwapUpdatePrice: FC = () => {
   const getRouterValue = (route: SwapForm["route"], aggregator: Aggregator) => {
     if (aggregator === Aggregator.Hop)
       return BigNumber((route as JSONQuoteResponse).amount_out_with_fee);
+    if (aggregator === Aggregator["7k"])
+      return BigNumber((route as QuoteResponse).returnAmountWithDecimal);
     if (aggregator === Aggregator.Aftermath)
-      return coinInValue
-        .div((route as RouterCompleteTradeRoute).spotPrice)
-        .times(1 - 0.001);
+      return coinInValue.div((route as RouterCompleteTradeRoute).spotPrice);
 
     return ZERO_BIG_NUMBER;
   };
 
   const getRouteValue = async () => {
     try {
-      const getAggregatorRouter = (argument: Aggregator) => {
-        if (argument === Aggregator.Hop)
-          return hopSdk.quote(
-            coinInType,
-            coinOutType,
-            coinInValue.times(1 - 0.002).toFixed(0),
-          );
-
-        if (argument === Aggregator.Aftermath)
-          return afSdk.quote(
-            coinInType,
-            coinOutType,
-            coinInValue.times(1 - 0.002).toFixed(0),
-          );
-
-        return;
-      };
-
-      const route = await getAggregatorRouter(aggregator!);
+      const route = await AGGREGATOR_ROUTER[aggregator!].quote(
+        coinInType,
+        coinOutType,
+        coinInValue.times(1 - EXCHANGE_FEE / 2).toFixed(0),
+        getValues("projectAddress"),
+      );
 
       setValue("route", route!);
 

@@ -1,10 +1,9 @@
-import type { Trade } from "@hop.ag/sdk";
+import { QuoteResponse } from "@7kprotocol/sdk-ts";
 import { Transaction } from "@mysten/sui/transactions";
 
 import { EXCHANGE_FEE_BPS } from "../../constants/fees";
-import { JSONQuoteResponse } from "../../terminal/swap/swap.types";
 
-export const useHopSdk = () => ({
+export const use7kSdk = () => ({
   quote: (
     coinIn: string,
     coinOut: string,
@@ -12,16 +11,16 @@ export const useHopSdk = () => ({
     feeAddress: string,
   ) =>
     fetch(
-      `https://trade-aggregator-api-production.up.railway.app/api/hop/quote?tokenIn=${coinIn}&tokenOut=${coinOut}&amountIn=${amountIn}&feeAddress=${feeAddress}&feeBps=${EXCHANGE_FEE_BPS / 2}`,
-    ).then((response) => response.json?.()) as Promise<JSONQuoteResponse>,
+      `https://trade-aggregator-api-production.up.railway.app/api/7k/quote?tokenIn=${coinIn}&tokenOut=${coinOut}&amountIn=${amountIn}&feeAddress=${feeAddress}&feeBps=${EXCHANGE_FEE_BPS}`,
+    ).then((response) => response.json?.()) as Promise<QuoteResponse>,
   swap: async (
-    trade: Trade,
+    trade: QuoteResponse,
     account: string,
     slippage: number,
     feeAddress: string,
   ) =>
     fetch(
-      "https://trade-aggregator-api-production.up.railway.app/api/hop/swap",
+      "https://trade-aggregator-api-production.up.railway.app/api/7k/swap",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
